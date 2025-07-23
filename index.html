@@ -13,12 +13,12 @@
 
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: #000000 url('https://images.unsplash.com/photo-1419242902214-272b3f66ee7a?w=1920&h=1080&fit=crop') center/cover fixed;
+            background: #000000;
             color: #ffffff;
             overflow-x: hidden;
         }
 
-        /* Background overlay for better text readability */
+        /* Pure Starry Sky Background */
         body::before {
             content: '';
             position: fixed;
@@ -26,11 +26,57 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background: rgba(0, 0, 0, 0.3);
-            z-index: -1;
+            background: 
+                radial-gradient(2px 2px at 20px 30px, #eee, transparent),
+                radial-gradient(2px 2px at 40px 70px, rgba(255,255,255,0.8), transparent),
+                radial-gradient(1px 1px at 90px 40px, #fff, transparent),
+                radial-gradient(1px 1px at 130px 80px, rgba(255,255,255,0.6), transparent),
+                radial-gradient(2px 2px at 160px 30px, #ddd, transparent),
+                radial-gradient(1px 1px at 200px 50px, rgba(255,255,255,0.7), transparent),
+                radial-gradient(1px 1px at 220px 90px, #fff, transparent),
+                radial-gradient(2px 2px at 260px 10px, rgba(255,255,255,0.9), transparent),
+                radial-gradient(1px 1px at 300px 60px, #eee, transparent),
+                radial-gradient(1px 1px at 340px 20px, rgba(255,255,255,0.8), transparent),
+                linear-gradient(180deg, #000012 0%, #000020 50%, #000033 100%);
+            background-repeat: repeat;
+            background-size: 360px 120px;
+            z-index: -2;
+            animation: starsMove 200s linear infinite;
         }
 
-        /* VYOM Background Text with Black Hole */
+        @keyframes starsMove {
+            from { transform: translateY(0px); }
+            to { transform: translateY(-120px); }
+        }
+
+        /* Additional twinkling stars layer */
+        body::after {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: 
+                radial-gradient(1px 1px at 50px 100px, rgba(255,255,255,0.9), transparent),
+                radial-gradient(1px 1px at 150px 20px, rgba(255,255,255,0.7), transparent),
+                radial-gradient(2px 2px at 250px 80px, rgba(255,255,255,0.6), transparent),
+                radial-gradient(1px 1px at 80px 150px, rgba(255,255,255,0.8), transparent),
+                radial-gradient(1px 1px at 180px 120px, rgba(255,255,255,0.5), transparent),
+                radial-gradient(2px 2px at 320px 40px, rgba(255,255,255,0.9), transparent);
+            background-repeat: repeat;
+            background-size: 400px 160px;
+            z-index: -1;
+            opacity: 0.7;
+            animation: twinkle 3s ease-in-out infinite alternate, starsMove 250s linear infinite reverse;
+        }
+
+        @keyframes twinkle {
+            0%, 100% { opacity: 0.3; }
+            50% { opacity: 0.8; }
+        }
+
+        /* VYOM Background Text with Precise Black Hole */
         .vyom-background {
             position: fixed;
             top: 50%;
@@ -56,20 +102,22 @@
             width: 0.8em;
             height: 0.8em;
             border-radius: 50%;
-            background: radial-gradient(circle at 30% 30%, 
+            background: radial-gradient(circle at 50% 50%, 
                 transparent 0%, 
-                transparent 40%, 
-                rgba(255, 100, 0, 0.3) 45%, 
-                rgba(255, 50, 0, 0.6) 50%, 
-                rgba(255, 0, 0, 0.8) 55%, 
+                transparent 35%, 
+                rgba(255, 150, 50, 0.2) 40%, 
+                rgba(255, 100, 30, 0.4) 45%, 
+                rgba(255, 80, 20, 0.6) 50%, 
+                rgba(200, 50, 10, 0.8) 55%, 
                 #000000 60%, 
                 #000000 100%);
             box-shadow: 
-                0 0 50px rgba(255, 100, 0, 0.5),
-                inset 0 0 30px rgba(0, 0, 0, 0.8);
-            animation: blackHoleRotate 10s linear infinite;
+                0 0 30px rgba(255, 120, 40, 0.4),
+                0 0 60px rgba(255, 80, 20, 0.3),
+                inset 0 0 20px rgba(0, 0, 0, 0.9);
             position: relative;
             margin: 0 0.05em;
+            animation: preciseBlackHoleRotate 8s linear infinite;
         }
 
         .black-hole::before {
@@ -77,24 +125,63 @@
             position: absolute;
             top: 50%;
             left: 50%;
-            width: 120%;
-            height: 120%;
+            width: 140%;
+            height: 140%;
             border-radius: 50%;
             background: conic-gradient(
                 from 0deg,
                 transparent 0deg,
-                rgba(255, 100, 0, 0.2) 90deg,
-                rgba(255, 50, 0, 0.3) 180deg,
-                rgba(255, 0, 0, 0.2) 270deg,
+                rgba(255, 120, 40, 0.15) 45deg,
+                rgba(255, 100, 30, 0.25) 90deg,
+                rgba(255, 80, 20, 0.35) 135deg,
+                rgba(255, 60, 10, 0.25) 180deg,
+                rgba(255, 80, 20, 0.35) 225deg,
+                rgba(255, 100, 30, 0.25) 270deg,
+                rgba(255, 120, 40, 0.15) 315deg,
                 transparent 360deg
             );
             transform: translate(-50%, -50%);
-            animation: blackHoleRotate 3s linear infinite reverse;
+            animation: preciseAccretionDisk 4s linear infinite;
         }
 
-        @keyframes blackHoleRotate {
-            from { transform: rotate(0deg); }
-            to { transform: rotate(360deg); }
+        .black-hole::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 180%;
+            height: 180%;
+            border-radius: 50%;
+            background: conic-gradient(
+                from 0deg,
+                transparent 0deg,
+                rgba(255, 150, 60, 0.1) 30deg,
+                rgba(255, 120, 40, 0.15) 60deg,
+                rgba(255, 100, 30, 0.2) 90deg,
+                rgba(255, 80, 20, 0.15) 120deg,
+                rgba(255, 100, 30, 0.2) 150deg,
+                rgba(255, 120, 40, 0.15) 180deg,
+                rgba(255, 150, 60, 0.1) 210deg,
+                transparent 240deg,
+                transparent 360deg
+            );
+            transform: translate(-50%, -50%);
+            animation: preciseOuterDisk 6s linear infinite reverse;
+        }
+
+        @keyframes preciseBlackHoleRotate {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        @keyframes preciseAccretionDisk {
+            0% { transform: translate(-50%, -50%) rotate(0deg); }
+            100% { transform: translate(-50%, -50%) rotate(360deg); }
+        }
+
+        @keyframes preciseOuterDisk {
+            0% { transform: translate(-50%, -50%) rotate(0deg); }
+            100% { transform: translate(-50%, -50%) rotate(-360deg); }
         }
 
         /* Realistic 3D Space Shuttle */
@@ -448,32 +535,6 @@
                 opacity: 1;
                 transform: translate(0, 0) scale(1) rotate(0deg);
             }
-        }
-
-        .mentor-photo {
-            width: 200px;
-            height: 200px;
-            border-radius: 50%;
-            background: linear-gradient(45deg, #ffd700, #ff6b35);
-            margin: 0 auto 2rem;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            position: relative;
-            overflow: hidden;
-            transition: all 0.3s ease;
-            animation: float 3s ease-in-out infinite;
-            box-shadow: 0 0 30px rgba(255, 215, 0, 0.3);
-        }
-
-        .mentor-photo:hover {
-            transform: scale(1.1);
-            box-shadow: 0 0 50px rgba(255, 215, 0, 0.5);
-        }
-
-        @keyframes float {
-            0%, 100% { transform: translateY(0px); }
-            50% { transform: translateY(-10px); }
         }
 
         .hero h1 {
@@ -966,6 +1027,11 @@
             animation: float 4s ease-in-out infinite;
         }
 
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+        }
+
         .mentor-card .mentor-photo::after {
             content: '';
             position: absolute;
@@ -1183,7 +1249,7 @@
     </style>
 </head>
 <body>
-    <!-- VYOM Background Text with Black Hole -->
+    <!-- VYOM Background Text with Precise Black Hole -->
     <div class="vyom-background">
         <span class="vyom-letter">V</span>
         <span class="vyom-letter">Y</span>
@@ -1232,9 +1298,6 @@
     <!-- Hero Section -->
     <section class="hero" id="hero">
         <div class="hero-content">
-            <div class="mentor-photo">
-                <img src="logo.png" alt="Mentor Photo" style="width:100%;height:100%;object-fit:cover;border-radius:50%;display:block;" />
-            </div>
             <h1>Welcome to University Astrophysics Club</h1>
             <p>Exploring the universe, one particle at a time.</p>
             <div class="countdown">
