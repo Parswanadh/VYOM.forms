@@ -29,6 +29,148 @@
             pointer-events: none;
         }
 
+        /* Rocket Animation Container */
+        .rocket-container {
+            position: fixed;
+            bottom: -200px;
+            left: -200px;
+            width: 300px;
+            height: 300px;
+            z-index: 5;
+            pointer-events: none;
+            animation: rocketFlight 4s ease-out forwards;
+            animation-delay: 0.5s;
+        }
+
+        .rocket {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            transform: rotate(45deg);
+        }
+
+        .rocket-body {
+            position: absolute;
+            width: 60px;
+            height: 180px;
+            background: linear-gradient(45deg, #ff6b6b, #feca57, #48dbfb, #ff9ff3);
+            border-radius: 30px 30px 5px 5px;
+            left: 50%;
+            top: 20%;
+            transform: translateX(-50%);
+            box-shadow: 0 0 30px rgba(255, 107, 107, 0.6);
+            animation: rocketGlow 0.5s ease-in-out infinite alternate;
+        }
+
+        .rocket-fins {
+            position: absolute;
+            width: 20px;
+            height: 40px;
+            background: linear-gradient(45deg, #3742fa, #2f3542);
+            bottom: 0;
+            border-radius: 0 0 10px 10px;
+        }
+
+        .rocket-fins.left {
+            left: 10px;
+            transform: skew(-15deg);
+        }
+
+        .rocket-fins.right {
+            right: 10px;
+            transform: skew(15deg);
+        }
+
+        .rocket-flame {
+            position: absolute;
+            width: 40px;
+            height: 80px;
+            bottom: -60px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: radial-gradient(ellipse at center, 
+                #ff6b6b 0%, 
+                #feca57 30%, 
+                #ff9ff3 60%, 
+                transparent 100%);
+            border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%;
+            animation: flameFlicker 0.1s ease-in-out infinite;
+            filter: blur(1px);
+        }
+
+        .smoke-trail {
+            position: absolute;
+            width: 100px;
+            height: 20px;
+            background: rgba(255, 255, 255, 0.3);
+            border-radius: 50%;
+            animation: smokeTrail 0.5s ease-out infinite;
+        }
+
+        @keyframes rocketFlight {
+            0% {
+                bottom: -200px;
+                left: -200px;
+                transform: rotate(-45deg) scale(0.5);
+                opacity: 0;
+            }
+            20% {
+                opacity: 1;
+                transform: rotate(-45deg) scale(0.8);
+            }
+            50% {
+                bottom: 50vh;
+                left: 20vw;
+                transform: rotate(10deg) scale(1);
+            }
+            70% {
+                bottom: 60vh;
+                left: 40vw;
+                transform: rotate(25deg) scale(1.1);
+            }
+            100% {
+                bottom: 70vh;
+                left: 60vw;
+                transform: rotate(35deg) scale(1.2);
+                opacity: 0.8;
+            }
+        }
+
+        @keyframes rocketGlow {
+            0% { box-shadow: 0 0 30px rgba(255, 107, 107, 0.6); }
+            100% { box-shadow: 0 0 50px rgba(255, 107, 107, 1), 0 0 80px rgba(72, 219, 251, 0.4); }
+        }
+
+        @keyframes flameFlicker {
+            0%, 100% { 
+                transform: translateX(-50%) scaleY(1) scaleX(1); 
+                opacity: 0.9;
+            }
+            25% { 
+                transform: translateX(-50%) scaleY(1.2) scaleX(0.8); 
+                opacity: 1;
+            }
+            50% { 
+                transform: translateX(-50%) scaleY(0.8) scaleX(1.2); 
+                opacity: 0.8;
+            }
+            75% { 
+                transform: translateX(-50%) scaleY(1.1) scaleX(0.9); 
+                opacity: 0.95;
+            }
+        }
+
+        @keyframes smokeTrail {
+            0% {
+                transform: scale(0) translateY(0);
+                opacity: 0.8;
+            }
+            100% {
+                transform: scale(2) translateY(-100px);
+                opacity: 0;
+            }
+        }
+
         /* Navigation */
         nav {
             position: fixed;
@@ -98,6 +240,21 @@
             z-index: 10;
             max-width: 800px;
             padding: 2rem;
+            opacity: 0;
+            transform: translateY(100px);
+            animation: heroContentRise 2s ease-out forwards;
+            animation-delay: 3s;
+        }
+
+        @keyframes heroContentRise {
+            0% {
+                opacity: 0;
+                transform: translateY(100px) scale(0.9);
+            }
+            100% {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+            }
         }
 
         .mentor-photo {
@@ -136,8 +293,14 @@
         }
 
         @keyframes glow {
-            from { text-shadow: 0 0 20px #00ffff; }
-            to { text-shadow: 0 0 30px #ff00ff; }
+            from { 
+                text-shadow: 0 0 20px #00ffff; 
+                filter: drop-shadow(0 0 10px #00ffff);
+            }
+            to { 
+                text-shadow: 0 0 30px #ff00ff; 
+                filter: drop-shadow(0 0 15px #ff00ff);
+            }
         }
 
         .hero p {
@@ -154,6 +317,7 @@
             margin: 2rem 0;
             font-size: 1.2rem;
             color: #00ffff;
+            backdrop-filter: blur(10px);
         }
 
         .countdown-timer {
@@ -176,11 +340,186 @@
             text-decoration: none;
             display: inline-block;
             margin-top: 1rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .cta-button::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+            transition: left 0.5s;
+        }
+
+        .cta-button:hover::before {
+            left: 100%;
         }
 
         .cta-button:hover {
             transform: translateY(-2px);
             box-shadow: 0 10px 20px rgba(0, 255, 255, 0.3);
+        }
+
+        /* Advanced Image Gallery */
+        .gallery-section {
+            padding: 5rem 0;
+            background: rgba(0, 0, 0, 0.8);
+        }
+
+        .gallery-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        .gallery-main {
+            display: flex;
+            gap: 2rem;
+            align-items: center;
+            margin-bottom: 2rem;
+        }
+
+        .gallery-display {
+            flex: 2;
+            position: relative;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 20px 40px rgba(0, 255, 255, 0.2);
+        }
+
+        .gallery-image {
+            width: 100%;
+            height: 500px;
+            object-fit: cover;
+            transition: all 0.5s ease;
+        }
+
+        .gallery-overlay {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: linear-gradient(transparent, rgba(0,0,0,0.8));
+            padding: 2rem;
+            color: white;
+            transform: translateY(100%);
+            transition: transform 0.3s ease;
+        }
+
+        .gallery-display:hover .gallery-overlay {
+            transform: translateY(0);
+        }
+
+        .gallery-info {
+            flex: 1;
+            padding: 2rem;
+        }
+
+        .gallery-title {
+            font-size: 2rem;
+            color: #00ffff;
+            margin-bottom: 1rem;
+            text-shadow: 0 0 10px #00ffff;
+        }
+
+        .gallery-description {
+            font-size: 1.1rem;
+            line-height: 1.6;
+            color: #cccccc;
+            margin-bottom: 2rem;
+        }
+
+        .gallery-stats {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        .stat-item {
+            background: rgba(255, 0, 255, 0.1);
+            padding: 1rem;
+            border-radius: 10px;
+            border: 1px solid rgba(255, 0, 255, 0.2);
+            text-align: center;
+        }
+
+        .stat-number {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #ff00ff;
+        }
+
+        .stat-label {
+            font-size: 0.9rem;
+            color: #cccccc;
+        }
+
+        .gallery-thumbnails {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin-top: 2rem;
+        }
+
+        .thumbnail {
+            width: 120px;
+            height: 80px;
+            border-radius: 10px;
+            overflow: hidden;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: 2px solid transparent;
+            position: relative;
+        }
+
+        .thumbnail.active {
+            border-color: #00ffff;
+            box-shadow: 0 0 20px rgba(0, 255, 255, 0.5);
+        }
+
+        .thumbnail:hover {
+            transform: scale(1.1);
+            border-color: #ff00ff;
+        }
+
+        .thumbnail img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .gallery-controls {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            margin-top: 2rem;
+        }
+
+        .control-btn {
+            background: rgba(0, 255, 255, 0.1);
+            border: 2px solid #00ffff;
+            color: #00ffff;
+            padding: 1rem;
+            border-radius: 50%;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 1.2rem;
+        }
+
+        .control-btn:hover {
+            background: rgba(0, 255, 255, 0.2);
+            transform: scale(1.1);
+        }
+
+        .control-btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
         }
 
         /* Section Styles */
@@ -318,6 +657,12 @@
             background: rgba(255, 0, 255, 0.05);
             border-radius: 10px;
             border: 1px solid rgba(255, 0, 255, 0.2);
+            transition: all 0.3s ease;
+        }
+
+        .role-item:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(255, 0, 255, 0.2);
         }
 
         .role-icon {
@@ -360,7 +705,7 @@
             border-color: #00ffff;
         }
 
-        .mentor-photo {
+        .mentor-card .mentor-photo {
             width: 150px;
             height: 150px;
             border-radius: 50%;
@@ -377,7 +722,7 @@
             animation: float 4s ease-in-out infinite;
         }
 
-        .mentor-photo::after {
+        .mentor-card .mentor-photo::after {
             content: '';
             position: absolute;
             top: 50%;
@@ -421,6 +766,12 @@
             background: rgba(255, 255, 255, 0.05);
             border-radius: 15px;
             border: 1px solid rgba(255, 0, 255, 0.2);
+            transition: all 0.3s ease;
+        }
+
+        .unique-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(255, 0, 255, 0.2);
         }
 
         .unique-icon {
@@ -510,6 +861,19 @@
             .uniqueness-grid {
                 grid-template-columns: 1fr;
             }
+
+            .gallery-main {
+                flex-direction: column;
+            }
+
+            .gallery-thumbnails {
+                grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+            }
+
+            .rocket-container {
+                width: 200px;
+                height: 200px;
+            }
         }
 
         /* Scroll animations */
@@ -523,23 +887,51 @@
             opacity: 1;
             transform: translateY(0);
         }
+
+        /* Advanced 3D Effects */
+        .perspective-card {
+            perspective: 1000px;
+        }
+
+        .perspective-card:hover .card-inner {
+            transform: rotateY(10deg) rotateX(5deg);
+        }
+
+        .card-inner {
+            transform-style: preserve-3d;
+            transition: transform 0.3s ease;
+        }
     </style>
 </head>
 <body>
     <canvas id="particle-canvas"></canvas>
 
+    <!-- Rocket Animation -->
+    <div class="rocket-container">
+        <div class="rocket">
+            <div class="rocket-body"></div>
+            <div class="rocket-fins left"></div>
+            <div class="rocket-fins right"></div>
+            <div class="rocket-flame"></div>
+            <div class="smoke-trail" style="bottom: -80px; left: 20px; animation-delay: -0.1s;"></div>
+            <div class="smoke-trail" style="bottom: -100px; left: 30px; animation-delay: -0.2s;"></div>
+            <div class="smoke-trail" style="bottom: -120px; left: 25px; animation-delay: -0.3s;"></div>
+        </div>
+    </div>
+
     <!-- Navigation -->
     <nav id="navbar">
         <div class="nav-container">
-            <div class="logo">🌌&nbsp;Astrophysics&nbsp;Club</div>
-        <ul class="nav-links">
-            <li><a href="#about">About&nbsp;Us</a></li>
-            <li><a href="#projects">Projects&nbsp;&&nbsp;Events</a></li>
-            <li><a href="#role">Role&nbsp;in&nbsp;College</a></li>
-            <li><a href="#mentors">Mentors</a></li>
-            <li><a href="#uniqueness">Uniqueness</a></li>
-            <li><a href="#register">Register</a></li>
-            <li><a href="#contact">Contact</a></li>
+            <div class="logo">🚀 Astrophysics Club</div>
+            <ul class="nav-links">
+                <li><a href="#about">About Us</a></li>
+                <li><a href="#gallery">Gallery</a></li>
+                <li><a href="#projects">Projects & Events</a></li>
+                <li><a href="#role">Role in College</a></li>
+                <li><a href="#mentors">Mentors</a></li>
+                <li><a href="#uniqueness">Uniqueness</a></li>
+                <li><a href="#register">Register</a></li>
+                <li><a href="#contact">Contact</a></li>
             </ul>
         </div>
     </nav>
@@ -548,7 +940,7 @@
     <section class="hero" id="hero">
         <div class="hero-content">
             <div class="mentor-photo">
-                <img src="logo.png" alt="no pic" style="width:100%;height:100%;object-fit:cover;border-radius:50%;display:block;" />
+                <img src="logo.png" alt="Mentor Photo" style="width:100%;height:100%;object-fit:cover;border-radius:50%;display:block;" />
             </div>
             <h1>Welcome to University Astrophysics Club</h1>
             <p>Exploring the universe, one particle at a time.</p>
@@ -557,6 +949,48 @@
                 <div class="countdown-timer" id="countdown">00d 00h 00m 00s</div>
             </div>
             <a href="#register" class="cta-button">Join the Journey</a>
+        </div>
+    </section>
+
+    <!-- Advanced Gallery Section -->
+    <section class="gallery-section" id="gallery">
+        <div class="gallery-container">
+            <h2 class="section-title fade-in">Our Cosmic Journey</h2>
+            <div class="gallery-main">
+                <div class="gallery-display">
+                    <img id="main-image" src="https://images.unsplash.com/photo-1446776653964-20c1d3a81b06?w=800&h=500&fit=crop" alt="Observatory" class="gallery-image">
+                    <div class="gallery-overlay">
+                        <h3 id="image-title">University Observatory</h3>
+                        <p id="image-description">Our state-of-the-art observatory facility equipped with advanced telescopes for deep space observation.</p>
+                    </div>
+                </div>
+                <div class="gallery-info">
+                    <h3 class="gallery-title" id="info-title">University Observatory</h3>
+                    <p class="gallery-description" id="info-description">
+                        Our state-of-the-art observatory facility equipped with advanced telescopes for deep space observation. Students have 24/7 access to conduct research and explore the cosmos.
+                    </p>
+                    <div class="gallery-stats">
+                        <div class="stat-item">
+                            <div class="stat-number" id="stat1">15</div>
+                            <div class="stat-label">Telescopes</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-number" id="stat2">500+</div>
+                            <div class="stat-label">Observations</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="gallery-controls">
+                <button class="control-btn" id="prev-btn">◀</button>
+                <button class="control-btn" id="next-btn">▶</button>
+                <button class="control-btn" id="auto-btn">⏯</button>
+            </div>
+
+            <div class="gallery-thumbnails" id="thumbnails">
+                <!-- Thumbnails will be populated by JavaScript -->
+            </div>
         </div>
     </section>
 
@@ -577,52 +1011,64 @@
         <div class="container">
             <h2 class="section-title fade-in">Projects & Events</h2>
             <div class="projects-grid">
-                <div class="project-card fade-in">
-                    <div class="project-image">🔭</div>
-                    <div class="project-content">
-                        <h3>Deep Sky Observation Night</h3>
-                        <p>Join us for monthly stargazing sessions using our advanced telescopes to observe nebulae, galaxies, and star clusters. We'll explore the Orion Nebula, Andromeda Galaxy, and other celestial wonders while learning about their formation and evolution. Perfect for beginners and experienced astronomers alike.</p>
-                        <div class="project-date">Every 2nd Friday of the month</div>
+                <div class="project-card fade-in perspective-card">
+                    <div class="card-inner">
+                        <div class="project-image">🔭</div>
+                        <div class="project-content">
+                            <h3>Deep Sky Observation Night</h3>
+                            <p>Join us for monthly stargazing sessions using our advanced telescopes to observe nebulae, galaxies, and star clusters. We'll explore the Orion Nebula, Andromeda Galaxy, and other celestial wonders while learning about their formation and evolution. Perfect for beginners and experienced astronomers alike.</p>
+                            <div class="project-date">Every 2nd Friday of the month</div>
+                        </div>
                     </div>
                 </div>
-                <div class="project-card fade-in">
-                    <div class="project-image">🌌</div>
-                    <div class="project-content">
-                        <h3>Exoplanet Detection Workshop</h3>
-                        <p>Hands-on workshop where students learn to detect exoplanets using the transit method. We'll analyze real data from the Kepler Space Telescope and learn about the techniques used to discover planets orbiting distant stars. Participants will process light curves and identify potential planetary candidates.</p>
-                        <div class="project-date">Quarterly workshop series</div>
+                <div class="project-card fade-in perspective-card">
+                    <div class="card-inner">
+                        <div class="project-image">🌌</div>
+                        <div class="project-content">
+                            <h3>Exoplanet Detection Workshop</h3>
+                            <p>Hands-on workshop where students learn to detect exoplanets using the transit method. We'll analyze real data from the Kepler Space Telescope and learn about the techniques used to discover planets orbiting distant stars. Participants will process light curves and identify potential planetary candidates.</p>
+                            <div class="project-date">Quarterly workshop series</div>
+                        </div>
                     </div>
                 </div>
-                <div class="project-card fade-in">
-                    <div class="project-image">🚀</div>
-                    <div class="project-content">
-                        <h3>Astrophotography Competition</h3>
-                        <p>Annual competition showcasing the best astronomical photographs taken by club members. Categories include deep-sky objects, planetary imaging, and wide-field star trails. Winners receive recognition and prizes, with their work displayed in the physics department. Technical workshops on imaging techniques are provided.</p>
-                        <div class="project-date">Annual event - Spring semester</div>
+                <div class="project-card fade-in perspective-card">
+                    <div class="card-inner">
+                        <div class="project-image">🚀</div>
+                        <div class="project-content">
+                            <h3>Astrophotography Competition</h3>
+                            <p>Annual competition showcasing the best astronomical photographs taken by club members. Categories include deep-sky objects, planetary imaging, and wide-field star trails. Winners receive recognition and prizes, with their work displayed in the physics department. Technical workshops on imaging techniques are provided.</p>
+                            <div class="project-date">Annual event - Spring semester</div>
+                        </div>
                     </div>
                 </div>
-                <div class="project-card fade-in">
-                    <div class="project-image">⚫</div>
-                    <div class="project-content">
-                        <h3>Black Hole Simulation Project</h3>
-                        <p>Collaborative research project using Python and specialized software to simulate black hole behavior and gravitational lensing effects. Students work in teams to model accretion disks, Hawking radiation, and spacetime curvature. Results are presented at the annual undergraduate research symposium.</p>
-                        <div class="project-date">Semester-long project</div>
+                <div class="project-card fade-in perspective-card">
+                    <div class="card-inner">
+                        <div class="project-image">⚫</div>
+                        <div class="project-content">
+                            <h3>Black Hole Simulation Project</h3>
+                            <p>Collaborative research project using Python and specialized software to simulate black hole behavior and gravitational lensing effects. Students work in teams to model accretion disks, Hawking radiation, and spacetime curvature. Results are presented at the annual undergraduate research symposium.</p>
+                            <div class="project-date">Semester-long project</div>
+                        </div>
                     </div>
                 </div>
-                <div class="project-card fade-in">
-                    <div class="project-image">🌟</div>
-                    <div class="project-content">
-                        <h3>Stellar Evolution Study Group</h3>
-                        <p>Weekly study sessions focusing on stellar lifecycle, from stellar nurseries to supernovae and neutron stars. We analyze HR diagrams, study stellar spectra, and use computational models to understand how stars evolve. Guest lectures from astronomy professors and graduate students enhance the learning experience.</p>
-                        <div class="project-date">Weekly meetings - Wednesdays 7PM</div>
+                <div class="project-card fade-in perspective-card">
+                    <div class="card-inner">
+                        <div class="project-image">🌟</div>
+                        <div class="project-content">
+                            <h3>Stellar Evolution Study Group</h3>
+                            <p>Weekly study sessions focusing on stellar lifecycle, from stellar nurseries to supernovae and neutron stars. We analyze HR diagrams, study stellar spectra, and use computational models to understand how stars evolve. Guest lectures from astronomy professors and graduate students enhance the learning experience.</p>
+                            <div class="project-date">Weekly meetings - Wednesdays 7PM</div>
+                        </div>
                     </div>
                 </div>
-                <div class="project-card fade-in">
-                    <div class="project-image">🛰️</div>
-                    <div class="project-content">
-                        <h3>Space Mission Analysis</h3>
-                        <p>In-depth analysis of current and upcoming space missions including James Webb Space Telescope, Artemis program, and Mars rovers. Students research mission objectives, technical specifications, and scientific discoveries. Regular presentations keep members updated on the latest space exploration developments.</p>
-                        <div class="project-date">Monthly mission briefings</div>
+                <div class="project-card fade-in perspective-card">
+                    <div class="card-inner">
+                        <div class="project-image">🛰️</div>
+                        <div class="project-content">
+                            <h3>Space Mission Analysis</h3>
+                            <p>In-depth analysis of current and upcoming space missions including James Webb Space Telescope, Artemis program, and Mars rovers. Students research mission objectives, technical specifications, and scientific discoveries. Regular presentations keep members updated on the latest space exploration developments.</p>
+                            <div class="project-date">Monthly mission briefings</div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -671,15 +1117,14 @@
         <div class="container">
             <h2 class="section-title fade-in">Our Mentors</h2>
             <div class="mentors-grid">
-                <div class="mentor-card fade-in">
-                    <div class="mentor-photo">DR. AS</div>
-                    <h3>Dr. Amelia Singh</h3>
-                    <div class="mentor-role">Faculty Advisor | Stellar Astrophysics</div>
-                    <p class="mentor-description">Dr. Singh specializes in stellar evolution and supernova research. She has published over 50 papers in leading astronomy journals and guides students in observational techniques and data analysis.</p>
+                <div class="mentor-card fade-in perspective-card">
+                    <div class="card-inner">
+                        <div class="mentor-photo">DR. AS</div>
+                        <h3>Dr. Amelia Singh</h3>
+                        <div class="mentor-role">Faculty Advisor | Stellar Astrophysics</div>
+                        <p class="mentor-description">Dr. Singh specializes in stellar evolution and supernova research. She has published over 50 papers in leading astronomy journals and guides students in observational techniques and data analysis.</p>
+                    </div>
                 </div>
-                
-                
-                
             </div>
         </div>
     </section>
@@ -689,25 +1134,33 @@
         <div class="container">
             <h2 class="section-title fade-in">What Makes Us Unique</h2>
             <div class="uniqueness-grid">
-                <div class="unique-item fade-in">
-                    <div class="unique-icon">🔭</div>
-                    <h3>Private Observatory Access</h3>
-                    <p>Exclusive 24/7 access to our state-of-the-art observatory with computerized telescopes and CCD cameras</p>
+                <div class="unique-item fade-in perspective-card">
+                    <div class="card-inner">
+                        <div class="unique-icon">🔭</div>
+                        <h3>Private Observatory Access</h3>
+                        <p>Exclusive 24/7 access to our state-of-the-art observatory with computerized telescopes and CCD cameras</p>
+                    </div>
                 </div>
-                <div class="unique-item fade-in">
-                    <div class="unique-icon">🌌</div>
-                    <h3>NASA Collaboration</h3>
-                    <p>Direct partnership with NASA for student internships and access to real space mission data</p>
+                <div class="unique-item fade-in perspective-card">
+                    <div class="card-inner">
+                        <div class="unique-icon">🌌</div>
+                        <h3>NASA Collaboration</h3>
+                        <p>Direct partnership with NASA for student internships and access to real space mission data</p>
+                    </div>
                 </div>
-                <div class="unique-item fade-in">
-                    <div class="unique-icon">📡</div>
-                    <h3>Radio Astronomy Lab</h3>
-                    <p>On-campus radio telescope facility for detecting pulsars and studying cosmic radio emissions</p>
+                <div class="unique-item fade-in perspective-card">
+                    <div class="card-inner">
+                        <div class="unique-icon">📡</div>
+                        <h3>Radio Astronomy Lab</h3>
+                        <p>On-campus radio telescope facility for detecting pulsars and studying cosmic radio emissions</p>
+                    </div>
                 </div>
-                <div class="unique-item fade-in">
-                    <div class="unique-icon">🎯</div>
-                    <h3>Research Publications</h3>
-                    <p>Student research regularly published in peer-reviewed journals with faculty mentorship</p>
+                <div class="unique-item fade-in perspective-card">
+                    <div class="card-inner">
+                        <div class="unique-icon">🎯</div>
+                        <h3>Research Publications</h3>
+                        <p>Student research regularly published in peer-reviewed journals with faculty mentorship</p>
+                    </div>
                 </div>
             </div>
         </div>
@@ -719,9 +1172,8 @@
             <h2 class="section-title fade-in">Join Our Community</h2>
             <div class="register-form fade-in">
                 <p style="text-align: center; margin-bottom: 2rem;">Ready to embark on your physics journey? Fill out the form below to become a member!</p>
-                <!-- Replace this with your actual Google Form embed URL -->
                 <iframe class="form-iframe" src="https://docs.google.com/forms/d/e/1FAIpQLSehCdlJ0boiKdZwpjUMc1ax4pltFXfkVS6xSIUaJ8Q0VUoAVQ/viewform?usp=sharing&ouid=115913809779884317631" frameborder="0" marginheight="0" marginwidth="0">Loading...</iframe>
-                <a href="https://docs.google.com/forms/d/e/1FAIpQLSehCdlJ0boiKdZwpjUMc1ax4pltFXfkVS6xSIUaJ8Q0VUoAVQ/viewform?usp=sharing&ouid=115913809779884317631" target="_blank" class="cta-button" style="display:block; width:max-content; margin:2rem auto 0 auto; text-align:center;">take me</a>
+                <a href="https://docs.google.com/forms/d/e/1FAIpQLSehCdlJ0boiKdZwpjUMc1ax4pltFXfkVS6xSIUaJ8Q0VUoAVQ/viewform?usp=sharing&ouid=115913809779884317631" target="_blank" class="cta-button" style="display:block; width:max-content; margin:2rem auto 0 auto; text-align:center;">Take me there</a>
             </div>
         </div>
     </section>
@@ -757,19 +1209,21 @@
     </section>
 
     <script>
-        // Particle Animation
+        // Advanced Particle System with Physics
         class ParticleSystem {
             constructor() {
                 this.canvas = document.getElementById('particle-canvas');
                 this.ctx = this.canvas.getContext('2d');
                 this.particles = [];
-                this.maxParticles = 100;
+                this.maxParticles = 150;
+                this.connections = [];
                 
                 this.resize();
                 this.init();
                 this.animate();
                 
                 window.addEventListener('resize', () => this.resize());
+                this.canvas.addEventListener('mousemove', (e) => this.handleMouseMove(e));
             }
             
             resize() {
@@ -782,24 +1236,88 @@
                     this.particles.push({
                         x: Math.random() * this.canvas.width,
                         y: Math.random() * this.canvas.height,
-                        vx: (Math.random() - 0.5) * 0.5,
-                        vy: (Math.random() - 0.5) * 0.5,
-                        radius: Math.random() * 2 + 1,
+                        vx: (Math.random() - 0.5) * 1,
+                        vy: (Math.random() - 0.5) * 1,
+                        radius: Math.random() * 3 + 1,
                         color: Math.random() > 0.5 ? '#00ffff' : '#ff00ff',
-                        opacity: Math.random() * 0.5 + 0.2
+                        opacity: Math.random() * 0.8 + 0.2,
+                        trail: []
                     });
                 }
             }
             
-            animate() {
-                this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
+            handleMouseMove(e) {
+                const mouseX = e.clientX;
+                const mouseY = e.clientY;
                 
                 this.particles.forEach(particle => {
+                    const dx = mouseX - particle.x;
+                    const dy = mouseY - particle.y;
+                    const distance = Math.sqrt(dx * dx + dy * dy);
+                    
+                    if (distance < 100) {
+                        const force = (100 - distance) / 100;
+                        particle.vx += (dx / distance) * force * 0.1;
+                        particle.vy += (dy / distance) * force * 0.1;
+                    }
+                });
+            }
+            
+            animate() {
+                this.ctx.fillStyle = 'rgba(10, 10, 10, 0.1)';
+                this.ctx.fillRect(0, 0, this.canvas.width, this.canvas.height);
+                
+                this.particles.forEach((particle, index) => {
+                    // Update position
                     particle.x += particle.vx;
                     particle.y += particle.vy;
                     
-                    if (particle.x < 0 || particle.x > this.canvas.width) particle.vx *= -1;
-                    if (particle.y < 0 || particle.y > this.canvas.height) particle.vy *= -1;
+                    // Apply friction
+                    particle.vx *= 0.99;
+                    particle.vy *= 0.99;
+                    
+                    // Boundary check with bounce
+                    if (particle.x < 0 || particle.x > this.canvas.width) {
+                        particle.vx *= -0.8;
+                        particle.x = Math.max(0, Math.min(this.canvas.width, particle.x));
+                    }
+                    if (particle.y < 0 || particle.y > this.canvas.height) {
+                        particle.vy *= -0.8;
+                        particle.y = Math.max(0, Math.min(this.canvas.height, particle.y));
+                    }
+                    
+                    // Update trail
+                    particle.trail.push({x: particle.x, y: particle.y});
+                    if (particle.trail.length > 10) {
+                        particle.trail.shift();
+                    }
+                    
+                    // Draw trail
+                    if (particle.trail.length > 1) {
+                        this.ctx.beginPath();
+                        this.ctx.moveTo(particle.trail[0].x, particle.trail[0].y);
+                        for (let i = 1; i < particle.trail.length; i++) {
+                            this.ctx.lineTo(particle.trail[i].x, particle.trail[i].y);
+                        }
+                        this.ctx.strokeStyle = particle.color;
+                        this.ctx.globalAlpha = 0.3;
+                        this.ctx.lineWidth = particle.radius / 2;
+                        this.ctx.stroke();
+                    }
+                    
+                    // Draw particle with glow effect
+                    const gradient = this.ctx.createRadialGradient(
+                        particle.x, particle.y, 0,
+                        particle.x, particle.y, particle.radius * 3
+                    );
+                    gradient.addColorStop(0, particle.color);
+                    gradient.addColorStop(1, 'transparent');
+                    
+                    this.ctx.beginPath();
+                    this.ctx.arc(particle.x, particle.y, particle.radius * 3, 0, Math.PI * 2);
+                    this.ctx.fillStyle = gradient;
+                    this.ctx.globalAlpha = particle.opacity * 0.5;
+                    this.ctx.fill();
                     
                     this.ctx.beginPath();
                     this.ctx.arc(particle.x, particle.y, particle.radius, 0, Math.PI * 2);
@@ -808,21 +1326,30 @@
                     this.ctx.fill();
                     
                     // Draw connections
-                    this.particles.forEach(otherParticle => {
+                    for (let j = index + 1; j < this.particles.length; j++) {
+                        const otherParticle = this.particles[j];
                         const dx = particle.x - otherParticle.x;
                         const dy = particle.y - otherParticle.y;
                         const distance = Math.sqrt(dx * dx + dy * dy);
                         
-                        if (distance < 100) {
+                        if (distance < 150) {
                             this.ctx.beginPath();
                             this.ctx.moveTo(particle.x, particle.y);
                             this.ctx.lineTo(otherParticle.x, otherParticle.y);
-                            this.ctx.strokeStyle = particle.color;
-                            this.ctx.globalAlpha = (100 - distance) / 100 * 0.1;
+                            
+                            const gradient = this.ctx.createLinearGradient(
+                                particle.x, particle.y,
+                                otherParticle.x, otherParticle.y
+                            );
+                            gradient.addColorStop(0, particle.color);
+                            gradient.addColorStop(1, otherParticle.color);
+                            
+                            this.ctx.strokeStyle = gradient;
+                            this.ctx.globalAlpha = (150 - distance) / 150 * 0.3;
                             this.ctx.lineWidth = 1;
                             this.ctx.stroke();
                         }
-                    });
+                    }
                 });
                 
                 this.ctx.globalAlpha = 1;
@@ -832,11 +1359,164 @@
         
         // Initialize particle system
         new ParticleSystem();
+
+        // Advanced Gallery System
+        class GallerySystem {
+            constructor() {
+                this.currentIndex = 0;
+                this.autoPlay = false;
+                this.autoPlayInterval = null;
+                
+                this.images = [
+                    {
+                        src: "https://images.unsplash.com/photo-1446776653964-20c1d3a81b06?w=800&h=500&fit=crop",
+                        title: "University Observatory",
+                        description: "Our state-of-the-art observatory facility equipped with advanced telescopes for deep space observation. Students have 24/7 access to conduct research and explore the cosmos.",
+                        stats: {stat1: "15", stat2: "500+", label1: "Telescopes", label2: "Observations"}
+                    },
+                    {
+                        src: "https://images.unsplash.com/photo-1462331940025-496dfbfc7564?w=800&h=500&fit=crop",
+                        title: "Astrophotography Lab",
+                        description: "Advanced imaging equipment for capturing stunning photographs of celestial objects. Our lab features professional-grade cameras and specialized filters for different wavelengths.",
+                        stats: {stat1: "8", stat2: "200+", label1: "Cameras", label2: "Images Taken"}
+                    },
+                    {
+                        src: "https://images.unsplash.com/photo-1446776858070-ceb41951b4c9?w=800&h=500&fit=crop",
+                        title: "Research Laboratory",
+                        description: "Cutting-edge research facility where students analyze data from space missions and conduct theoretical physics research. Equipped with high-performance computing systems.",
+                        stats: {stat1: "12", stat2: "50+", label1: "Workstations", label2: "Research Papers"}
+                    },
+                    {
+                        src: "https://images.unsplash.com/photo-1614728263952-84ea256f9679?w=800&h=500&fit=crop",
+                        title: "Planetarium",
+                        description: "Immersive dome theater for educational presentations and public outreach programs. Features 4K projection system and surround sound for an authentic space experience.",
+                        stats: {stat1: "120", stat2: "1000+", label1: "Seats", label2: "Visitors/Month"}
+                    },
+                    {
+                        src: "https://images.unsplash.com/photo-1581833971358-2c8b550f87b3?w=800&h=500&fit=crop",
+                        title: "Radio Telescope Array",
+                        description: "Collection of radio dishes for detecting radio waves from space. Used for studying pulsars, quasars, and other high-energy astronomical phenomena.",
+                        stats: {stat1: "6", stat2: "24/7", label1: "Dishes", label2: "Operation"}
+                    },
+                    {
+                        src: "https://images.unsplash.com/photo-1517976487492-5750f3195933?w=800&h=500&fit=crop",
+                        title: "Student Workshop",
+                        description: "Collaborative workspace where students build instruments, analyze data, and prepare presentations. Features 3D printers and electronics lab for custom equipment.",
+                        stats: {stat1: "30", stat2: "100+", label1: "Workbenches", label2: "Projects/Year"}
+                    }
+                ];
+                
+                this.init();
+            }
+            
+            init() {
+                this.createThumbnails();
+                this.setupEventListeners();
+                this.showImage(0);
+            }
+            
+            createThumbnails() {
+                const thumbnailsContainer = document.getElementById('thumbnails');
+                thumbnailsContainer.innerHTML = '';
+                
+                this.images.forEach((image, index) => {
+                    const thumbnail = document.createElement('div');
+                    thumbnail.className = 'thumbnail';
+                    thumbnail.innerHTML = `<img src="${image.src}" alt="${image.title}">`;
+                    thumbnail.addEventListener('click', () => this.showImage(index));
+                    thumbnailsContainer.appendChild(thumbnail);
+                });
+            }
+            
+            setupEventListeners() {
+                document.getElementById('prev-btn').addEventListener('click', () => {
+                    this.showImage(this.currentIndex - 1);
+                });
+                
+                document.getElementById('next-btn').addEventListener('click', () => {
+                    this.showImage(this.currentIndex + 1);
+                });
+                
+                document.getElementById('auto-btn').addEventListener('click', () => {
+                    this.toggleAutoPlay();
+                });
+                
+                // Keyboard navigation
+                document.addEventListener('keydown', (e) => {
+                    if (e.key === 'ArrowLeft') this.showImage(this.currentIndex - 1);
+                    if (e.key === 'ArrowRight') this.showImage(this.currentIndex + 1);
+                    if (e.key === ' ') {
+                        e.preventDefault();
+                        this.toggleAutoPlay();
+                    }
+                });
+            }
+            
+            showImage(index) {
+                if (index < 0) index = this.images.length - 1;
+                if (index >= this.images.length) index = 0;
+                
+                this.currentIndex = index;
+                const image = this.images[index];
+                
+                // Update main image with fade effect
+                const mainImage = document.getElementById('main-image');
+                mainImage.style.opacity = '0';
+                
+                setTimeout(() => {
+                    mainImage.src = image.src;
+                    mainImage.alt = image.title;
+                    mainImage.style.opacity = '1';
+                }, 150);
+                
+                // Update overlay content
+                document.getElementById('image-title').textContent = image.title;
+                document.getElementById('image-description').textContent = image.description;
+                
+                // Update info panel
+                document.getElementById('info-title').textContent = image.title;
+                document.getElementById('info-description').textContent = image.description;
+                document.getElementById('stat1').textContent = image.stats.stat1;
+                document.getElementById('stat2').textContent = image.stats.stat2;
+                document.querySelectorAll('.stat-label')[0].textContent = image.stats.label1;
+                document.querySelectorAll('.stat-label')[1].textContent = image.stats.label2;
+                
+                // Update thumbnails
+                document.querySelectorAll('.thumbnail').forEach((thumb, i) => {
+                    thumb.classList.toggle('active', i === index);
+                });
+                
+                // Update navigation buttons
+                document.getElementById('prev-btn').disabled = false;
+                document.getElementById('next-btn').disabled = false;
+            }
+            
+            toggleAutoPlay() {
+                const autoBtn = document.getElementById('auto-btn');
+                
+                if (this.autoPlay) {
+                    clearInterval(this.autoPlayInterval);
+                    this.autoPlay = false;
+                    autoBtn.textContent = '▶';
+                } else {
+                    this.autoPlayInterval = setInterval(() => {
+                        this.showImage(this.currentIndex + 1);
+                    }, 4000);
+                    this.autoPlay = true;
+                    autoBtn.textContent = '⏸';
+                }
+            }
+        }
+        
+        // Initialize gallery system
+        setTimeout(() => {
+            new GallerySystem();
+        }, 1000);
         
         // Countdown Timer
         function updateCountdown() {
             const now = new Date().getTime();
-            const eventDate = new Date('2025-08-15T23:59:59').getTime(); // Set your event date
+            const eventDate = new Date('2025-08-15T23:59:59').getTime();
             const distance = eventDate - now;
             
             const days = Math.floor(distance / (1000 * 60 * 60 * 24));
@@ -879,7 +1559,7 @@
             }
         });
         
-        // Scroll animations
+        // Enhanced scroll animations
         const observerOptions = {
             threshold: 0.1,
             rootMargin: '0px 0px -50px 0px'
@@ -889,12 +1569,45 @@
             entries.forEach(entry => {
                 if (entry.isIntersecting) {
                     entry.target.classList.add('visible');
+                    
+                    // Add stagger effect for grids
+                    if (entry.target.classList.contains('projects-grid') || 
+                        entry.target.classList.contains('mentors-grid') || 
+                        entry.target.classList.contains('uniqueness-grid')) {
+                        const children = entry.target.children;
+                        Array.from(children).forEach((child, index) => {
+                            setTimeout(() => {
+                                child.style.opacity = '1';
+                                child.style.transform = 'translateY(0)';
+                            }, index * 100);
+                        });
+                    }
                 }
             });
         }, observerOptions);
         
         document.querySelectorAll('.fade-in').forEach(el => {
             observer.observe(el);
+        });
+
+        // Add rocket sound effect (optional)
+        function playRocketSound() {
+            // You can add audio here if needed
+            // const audio = new Audio('rocket-sound.mp3');
+            // audio.play();
+        }
+
+        // Trigger rocket sound when animation starts
+        setTimeout(playRocketSound, 500);
+
+        // Add parallax effect to hero section
+        window.addEventListener('scroll', () => {
+            const scrolled = window.pageYOffset;
+            const parallax = document.querySelector('.hero-content');
+            if (parallax) {
+                const speed = scrolled * 0.2;
+                parallax.style.transform = `translateY(${speed}px)`;
+            }
         });
     </script>
 </body>
