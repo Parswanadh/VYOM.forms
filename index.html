@@ -13,13 +13,24 @@
 
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: #0a0a0a;
+            background: #000000;
             color: #ffffff;
             overflow-x: hidden;
         }
 
-        /* Animated Background Canvas */
-        #particle-canvas {
+        /* Interstellar Space Background */
+        #space-canvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            pointer-events: none;
+            background: radial-gradient(ellipse at center, #1a1a2e 0%, #16213e 50%, #0f0f23 100%);
+        }
+
+        .stars {
             position: fixed;
             top: 0;
             left: 0;
@@ -29,125 +40,189 @@
             pointer-events: none;
         }
 
-        /* Rocket Animation Container */
-        .rocket-container {
-            position: fixed;
-            bottom: -200px;
-            left: -200px;
-            width: 300px;
-            height: 300px;
-            z-index: 5;
-            pointer-events: none;
-            animation: rocketFlight 4s ease-out forwards;
-            animation-delay: 0.5s;
+        .star {
+            position: absolute;
+            background: white;
+            border-radius: 50%;
+            animation: twinkle 3s infinite;
         }
 
-        .rocket {
+        @keyframes twinkle {
+            0%, 100% { opacity: 0.3; }
+            50% { opacity: 1; }
+        }
+
+        /* Realistic Rocket Animation */
+        .rocket-container {
+            position: fixed;
+            bottom: -400px;
+            left: -300px;
+            width: 200px;
+            height: 600px;
+            z-index: 5;
+            pointer-events: none;
+            animation: realisticRocketFlight 8s ease-out forwards;
+            animation-delay: 1s;
+        }
+
+        .realistic-rocket {
             position: relative;
             width: 100%;
             height: 100%;
-            transform: rotate(45deg);
+            transform: rotate(65deg);
         }
 
-        .rocket-body {
-            position: absolute;
-            width: 60px;
-            height: 180px;
-            background: linear-gradient(45deg, #ff6b6b, #feca57, #48dbfb, #ff9ff3);
-            border-radius: 30px 30px 5px 5px;
-            left: 50%;
-            top: 20%;
-            transform: translateX(-50%);
-            box-shadow: 0 0 30px rgba(255, 107, 107, 0.6);
-            animation: rocketGlow 0.5s ease-in-out infinite alternate;
-        }
-
-        .rocket-fins {
-            position: absolute;
-            width: 20px;
-            height: 40px;
-            background: linear-gradient(45deg, #3742fa, #2f3542);
-            bottom: 0;
-            border-radius: 0 0 10px 10px;
-        }
-
-        .rocket-fins.left {
-            left: 10px;
-            transform: skew(-15deg);
-        }
-
-        .rocket-fins.right {
-            right: 10px;
-            transform: skew(15deg);
-        }
-
-        .rocket-flame {
+        /* Main rocket body */
+        .rocket-main-body {
             position: absolute;
             width: 40px;
-            height: 80px;
-            bottom: -60px;
+            height: 300px;
+            background: linear-gradient(180deg, #f8f9fa 0%, #e9ecef 20%, #dee2e6 40%, #ced4da 100%);
+            border-radius: 20px 20px 5px 5px;
+            left: 50%;
+            top: 100px;
+            transform: translateX(-50%);
+            box-shadow: 
+                inset -5px 0 10px rgba(0,0,0,0.3),
+                0 0 20px rgba(255,255,255,0.1);
+        }
+
+        /* Rocket nose cone */
+        .rocket-nose {
+            position: absolute;
+            width: 0;
+            height: 0;
+            border-left: 20px solid transparent;
+            border-right: 20px solid transparent;
+            border-bottom: 80px solid #ff4757;
+            left: 50%;
+            top: 20px;
+            transform: translateX(-50%);
+            filter: drop-shadow(0 0 10px rgba(255, 71, 87, 0.5));
+        }
+
+        /* Side boosters */
+        .booster {
+            position: absolute;
+            width: 25px;
+            height: 200px;
+            background: linear-gradient(180deg, #6c757d 0%, #495057 50%, #343a40 100%);
+            border-radius: 12px 12px 3px 3px;
+            box-shadow: inset -3px 0 8px rgba(0,0,0,0.4);
+        }
+
+        .booster.left {
+            left: 5px;
+            top: 150px;
+        }
+
+        .booster.right {
+            right: 5px;
+            top: 150px;
+        }
+
+        /* Realistic engine flames */
+        .engine-flame {
+            position: absolute;
+            bottom: -150px;
             left: 50%;
             transform: translateX(-50%);
-            background: radial-gradient(ellipse at center, 
-                #ff6b6b 0%, 
-                #feca57 30%, 
-                #ff9ff3 60%, 
+            width: 60px;
+            height: 200px;
+            background: linear-gradient(180deg, 
+                #ffd700 0%,
+                #ff6b35 20%, 
+                #ff4757 40%,
+                #3742fa 70%,
                 transparent 100%);
-            border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%;
-            animation: flameFlicker 0.1s ease-in-out infinite;
+            border-radius: 50%;
+            animation: engineFlame 0.1s ease-in-out infinite;
+            filter: blur(2px);
+        }
+
+        .booster-flame {
+            position: absolute;
+            width: 35px;
+            height: 120px;
+            background: linear-gradient(180deg, 
+                #ffd700 0%,
+                #ff6b35 30%, 
+                #ff4757 60%,
+                transparent 100%);
+            border-radius: 50%;
+            animation: engineFlame 0.15s ease-in-out infinite;
             filter: blur(1px);
         }
 
-        .smoke-trail {
-            position: absolute;
-            width: 100px;
-            height: 20px;
-            background: rgba(255, 255, 255, 0.3);
-            border-radius: 50%;
-            animation: smokeTrail 0.5s ease-out infinite;
+        .booster-flame.left {
+            left: 17px;
+            bottom: -100px;
         }
 
-        @keyframes rocketFlight {
+        .booster-flame.right {
+            right: 17px;
+            bottom: -100px;
+        }
+
+        /* Exhaust trail */
+        .exhaust-trail {
+            position: absolute;
+            width: 80px;
+            height: 300px;
+            background: linear-gradient(180deg, 
+                rgba(255, 215, 0, 0.3) 0%,
+                rgba(255, 107, 53, 0.2) 30%,
+                rgba(255, 71, 87, 0.1) 60%,
+                transparent 100%);
+            bottom: -400px;
+            left: 50%;
+            transform: translateX(-50%);
+            border-radius: 50%;
+            animation: exhaustTrail 0.2s ease-in-out infinite;
+            filter: blur(3px);
+        }
+
+        @keyframes realisticRocketFlight {
             0% {
-                bottom: -200px;
-                left: -200px;
-                transform: rotate(-45deg) scale(0.5);
+                bottom: -400px;
+                left: -300px;
+                transform: rotate(-35deg) scale(0.8);
                 opacity: 0;
             }
-            20% {
+            15% {
                 opacity: 1;
-                transform: rotate(-45deg) scale(0.8);
+                transform: rotate(-35deg) scale(1);
+            }
+            25% {
+                bottom: 20vh;
+                left: 10vw;
+                transform: rotate(-25deg) scale(1.1);
             }
             50% {
                 bottom: 50vh;
-                left: 20vw;
-                transform: rotate(10deg) scale(1);
+                left: 30vw;
+                transform: rotate(-15deg) scale(1.2);
             }
-            70% {
-                bottom: 60vh;
-                left: 40vw;
-                transform: rotate(25deg) scale(1.1);
+            75% {
+                bottom: 80vh;
+                left: 60vw;
+                transform: rotate(-5deg) scale(1.3);
             }
             100% {
-                bottom: 70vh;
-                left: 60vw;
-                transform: rotate(35deg) scale(1.2);
-                opacity: 0.8;
+                bottom: 120vh;
+                left: 90vw;
+                transform: rotate(10deg) scale(1.4);
+                opacity: 0.3;
             }
         }
 
-        @keyframes rocketGlow {
-            0% { box-shadow: 0 0 30px rgba(255, 107, 107, 0.6); }
-            100% { box-shadow: 0 0 50px rgba(255, 107, 107, 1), 0 0 80px rgba(72, 219, 251, 0.4); }
-        }
-
-        @keyframes flameFlicker {
+        @keyframes engineFlame {
             0%, 100% { 
                 transform: translateX(-50%) scaleY(1) scaleX(1); 
                 opacity: 0.9;
             }
             25% { 
-                transform: translateX(-50%) scaleY(1.2) scaleX(0.8); 
+                transform: translateX(-50%) scaleY(1.3) scaleX(0.7); 
                 opacity: 1;
             }
             50% { 
@@ -160,14 +235,14 @@
             }
         }
 
-        @keyframes smokeTrail {
-            0% {
-                transform: scale(0) translateY(0);
-                opacity: 0.8;
+        @keyframes exhaustTrail {
+            0%, 100% {
+                transform: translateX(-50%) scaleY(1);
+                opacity: 0.6;
             }
-            100% {
-                transform: scale(2) translateY(-100px);
-                opacity: 0;
+            50% {
+                transform: translateX(-50%) scaleY(1.2);
+                opacity: 0.8;
             }
         }
 
@@ -176,15 +251,16 @@
             position: fixed;
             top: 0;
             width: 100%;
-            background: rgba(10, 10, 10, 0.9);
-            backdrop-filter: blur(10px);
+            background: rgba(0, 0, 0, 0.8);
+            backdrop-filter: blur(15px);
             z-index: 1000;
             padding: 1rem 0;
             transition: all 0.3s ease;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
         }
 
         nav.scrolled {
-            background: rgba(10, 10, 10, 0.95);
+            background: rgba(0, 0, 0, 0.9);
             padding: 0.5rem 0;
         }
 
@@ -200,8 +276,8 @@
         .logo {
             font-size: 1.5rem;
             font-weight: bold;
-            color: #00ffff;
-            text-shadow: 0 0 10px #00ffff;
+            color: #ffd700;
+            text-shadow: 0 0 10px #ffd700;
         }
 
         .nav-links {
@@ -219,12 +295,12 @@
         }
 
         .nav-links a:hover {
-            color: #00ffff;
-            background: rgba(0, 255, 255, 0.1);
-            text-shadow: 0 0 5px #00ffff;
+            color: #ffd700;
+            background: rgba(255, 215, 0, 0.1);
+            text-shadow: 0 0 5px #ffd700;
         }
 
-        /* Hero Section */
+        /* Hero Section - Content from bottom-left */
         .hero {
             height: 100vh;
             display: flex;
@@ -241,19 +317,27 @@
             max-width: 800px;
             padding: 2rem;
             opacity: 0;
-            transform: translateY(100px);
-            animation: heroContentRise 2s ease-out forwards;
-            animation-delay: 3s;
+            transform: translate(-400px, 300px) scale(0.5);
+            animation: heroContentFromBottomLeft 3s ease-out forwards;
+            animation-delay: 2s;
         }
 
-        @keyframes heroContentRise {
+        @keyframes heroContentFromBottomLeft {
             0% {
                 opacity: 0;
-                transform: translateY(100px) scale(0.9);
+                transform: translate(-400px, 300px) scale(0.5) rotate(-15deg);
+            }
+            30% {
+                opacity: 0.5;
+                transform: translate(-200px, 150px) scale(0.7) rotate(-8deg);
+            }
+            60% {
+                opacity: 0.8;
+                transform: translate(-50px, 50px) scale(0.9) rotate(-3deg);
             }
             100% {
                 opacity: 1;
-                transform: translateY(0) scale(1);
+                transform: translate(0, 0) scale(1) rotate(0deg);
             }
         }
 
@@ -261,7 +345,7 @@
             width: 200px;
             height: 200px;
             border-radius: 50%;
-            background: linear-gradient(45deg, #00ffff, #ff00ff);
+            background: linear-gradient(45deg, #ffd700, #ff6b35);
             margin: 0 auto 2rem;
             display: flex;
             align-items: center;
@@ -270,11 +354,12 @@
             overflow: hidden;
             transition: all 0.3s ease;
             animation: float 3s ease-in-out infinite;
+            box-shadow: 0 0 30px rgba(255, 215, 0, 0.3);
         }
 
         .mentor-photo:hover {
             transform: scale(1.1);
-            box-shadow: 0 0 30px #00ffff;
+            box-shadow: 0 0 50px rgba(255, 215, 0, 0.5);
         }
 
         @keyframes float {
@@ -285,38 +370,38 @@
         .hero h1 {
             font-size: 3.5rem;
             margin-bottom: 1rem;
-            background: linear-gradient(45deg, #00ffff, #ff00ff);
+            background: linear-gradient(45deg, #ffd700, #ff6b35);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
-            animation: glow 2s ease-in-out infinite alternate;
+            animation: titleGlow 2s ease-in-out infinite alternate;
         }
 
-        @keyframes glow {
+        @keyframes titleGlow {
             from { 
-                text-shadow: 0 0 20px #00ffff; 
-                filter: drop-shadow(0 0 10px #00ffff);
+                text-shadow: 0 0 20px rgba(255, 215, 0, 0.5); 
+                filter: drop-shadow(0 0 10px rgba(255, 215, 0, 0.3));
             }
             to { 
-                text-shadow: 0 0 30px #ff00ff; 
-                filter: drop-shadow(0 0 15px #ff00ff);
+                text-shadow: 0 0 30px rgba(255, 107, 53, 0.5); 
+                filter: drop-shadow(0 0 15px rgba(255, 107, 53, 0.3));
             }
         }
 
         .hero p {
             font-size: 1.5rem;
             margin-bottom: 2rem;
-            color: #cccccc;
+            color: #e0e0e0;
         }
 
         .countdown {
-            background: rgba(0, 255, 255, 0.1);
-            border: 2px solid #00ffff;
+            background: rgba(255, 215, 0, 0.1);
+            border: 2px solid #ffd700;
             border-radius: 10px;
             padding: 1rem 2rem;
             margin: 2rem 0;
             font-size: 1.2rem;
-            color: #00ffff;
+            color: #ffd700;
             backdrop-filter: blur(10px);
         }
 
@@ -328,7 +413,7 @@
         }
 
         .cta-button {
-            background: linear-gradient(45deg, #00ffff, #ff00ff);
+            background: linear-gradient(45deg, #ffd700, #ff6b35);
             color: #000;
             padding: 1rem 2rem;
             border: none;
@@ -342,6 +427,7 @@
             margin-top: 1rem;
             position: relative;
             overflow: hidden;
+            box-shadow: 0 5px 15px rgba(255, 215, 0, 0.3);
         }
 
         .cta-button::before {
@@ -361,7 +447,7 @@
 
         .cta-button:hover {
             transform: translateY(-2px);
-            box-shadow: 0 10px 20px rgba(0, 255, 255, 0.3);
+            box-shadow: 0 10px 25px rgba(255, 215, 0, 0.4);
         }
 
         /* Advanced Image Gallery */
@@ -388,7 +474,7 @@
             position: relative;
             border-radius: 20px;
             overflow: hidden;
-            box-shadow: 0 20px 40px rgba(0, 255, 255, 0.2);
+            box-shadow: 0 20px 40px rgba(255, 215, 0, 0.2);
         }
 
         .gallery-image {
@@ -421,15 +507,15 @@
 
         .gallery-title {
             font-size: 2rem;
-            color: #00ffff;
+            color: #ffd700;
             margin-bottom: 1rem;
-            text-shadow: 0 0 10px #00ffff;
+            text-shadow: 0 0 10px #ffd700;
         }
 
         .gallery-description {
             font-size: 1.1rem;
             line-height: 1.6;
-            color: #cccccc;
+            color: #e0e0e0;
             margin-bottom: 2rem;
         }
 
@@ -441,22 +527,22 @@
         }
 
         .stat-item {
-            background: rgba(255, 0, 255, 0.1);
+            background: rgba(255, 215, 0, 0.1);
             padding: 1rem;
             border-radius: 10px;
-            border: 1px solid rgba(255, 0, 255, 0.2);
+            border: 1px solid rgba(255, 215, 0, 0.2);
             text-align: center;
         }
 
         .stat-number {
             font-size: 1.5rem;
             font-weight: bold;
-            color: #ff00ff;
+            color: #ff6b35;
         }
 
         .stat-label {
             font-size: 0.9rem;
-            color: #cccccc;
+            color: #e0e0e0;
         }
 
         .gallery-thumbnails {
@@ -479,13 +565,13 @@
         }
 
         .thumbnail.active {
-            border-color: #00ffff;
-            box-shadow: 0 0 20px rgba(0, 255, 255, 0.5);
+            border-color: #ffd700;
+            box-shadow: 0 0 20px rgba(255, 215, 0, 0.5);
         }
 
         .thumbnail:hover {
             transform: scale(1.1);
-            border-color: #ff00ff;
+            border-color: #ff6b35;
         }
 
         .thumbnail img {
@@ -502,9 +588,9 @@
         }
 
         .control-btn {
-            background: rgba(0, 255, 255, 0.1);
-            border: 2px solid #00ffff;
-            color: #00ffff;
+            background: rgba(255, 215, 0, 0.1);
+            border: 2px solid #ffd700;
+            color: #ffd700;
             padding: 1rem;
             border-radius: 50%;
             cursor: pointer;
@@ -513,7 +599,7 @@
         }
 
         .control-btn:hover {
-            background: rgba(0, 255, 255, 0.2);
+            background: rgba(255, 215, 0, 0.2);
             transform: scale(1.1);
         }
 
@@ -538,8 +624,8 @@
             font-size: 2.5rem;
             text-align: center;
             margin-bottom: 3rem;
-            color: #00ffff;
-            text-shadow: 0 0 10px #00ffff;
+            color: #ffd700;
+            text-shadow: 0 0 10px #ffd700;
         }
 
         /* About Section */
@@ -549,10 +635,10 @@
             line-height: 1.8;
             max-width: 800px;
             margin: 0 auto;
-            background: rgba(0, 255, 255, 0.05);
+            background: rgba(255, 215, 0, 0.05);
             padding: 2rem;
             border-radius: 15px;
-            border: 1px solid rgba(0, 255, 255, 0.2);
+            border: 1px solid rgba(255, 215, 0, 0.2);
         }
 
         /* Projects Grid */
@@ -564,10 +650,10 @@
         }
 
         .project-card {
-            background: rgba(255, 255, 255, 0.05);
+            background: rgba(255, 255, 255, 0.03);
             border-radius: 15px;
             overflow: hidden;
-            border: 1px solid rgba(0, 255, 255, 0.2);
+            border: 1px solid rgba(255, 215, 0, 0.2);
             transition: all 0.3s ease;
             cursor: pointer;
             min-height: 450px;
@@ -577,19 +663,19 @@
 
         .project-card:hover {
             transform: translateY(-5px);
-            box-shadow: 0 10px 30px rgba(0, 255, 255, 0.2);
-            border-color: #00ffff;
+            box-shadow: 0 10px 30px rgba(255, 215, 0, 0.2);
+            border-color: #ffd700;
         }
 
         .project-image {
             width: 100%;
             height: 200px;
-            background: linear-gradient(135deg, #00ffff20, #ff00ff20);
+            background: linear-gradient(135deg, rgba(255, 215, 0, 0.1), rgba(255, 107, 53, 0.1));
             display: flex;
             align-items: center;
             justify-content: center;
             font-size: 3rem;
-            color: #00ffff;
+            color: #ffd700;
             position: relative;
             overflow: hidden;
         }
@@ -601,7 +687,7 @@
             left: 50%;
             width: 100px;
             height: 100px;
-            background: radial-gradient(circle, rgba(0, 255, 255, 0.3) 0%, transparent 70%);
+            background: radial-gradient(circle, rgba(255, 215, 0, 0.3) 0%, transparent 70%);
             transform: translate(-50%, -50%);
             border-radius: 50%;
             animation: pulse 2s ease-in-out infinite;
@@ -620,25 +706,25 @@
         }
 
         .project-content h3 {
-            color: #ff00ff;
+            color: #ff6b35;
             margin-bottom: 1rem;
             font-size: 1.4rem;
-            text-shadow: 0 0 5px #ff00ff;
+            text-shadow: 0 0 5px #ff6b35;
         }
 
         .project-content p {
             line-height: 1.6;
-            color: #cccccc;
+            color: #e0e0e0;
             margin-bottom: 1rem;
             flex: 1;
         }
 
         .project-date {
             font-size: 0.9rem;
-            color: #00ffff;
+            color: #ffd700;
             margin-top: auto;
             padding-top: 1rem;
-            border-top: 1px solid rgba(0, 255, 255, 0.2);
+            border-top: 1px solid rgba(255, 215, 0, 0.2);
         }
 
         /* Role Section */
@@ -654,20 +740,20 @@
             align-items: center;
             gap: 1rem;
             padding: 1rem;
-            background: rgba(255, 0, 255, 0.05);
+            background: rgba(255, 107, 53, 0.05);
             border-radius: 10px;
-            border: 1px solid rgba(255, 0, 255, 0.2);
+            border: 1px solid rgba(255, 107, 53, 0.2);
             transition: all 0.3s ease;
         }
 
         .role-item:hover {
             transform: translateY(-3px);
-            box-shadow: 0 5px 15px rgba(255, 0, 255, 0.2);
+            box-shadow: 0 5px 15px rgba(255, 107, 53, 0.2);
         }
 
         .role-icon {
             font-size: 2rem;
-            color: #ff00ff;
+            color: #ff6b35;
         }
 
         /* Mentors Section */
@@ -681,9 +767,9 @@
         .mentor-card {
             text-align: center;
             padding: 2rem;
-            background: rgba(255, 255, 255, 0.05);
+            background: rgba(255, 255, 255, 0.03);
             border-radius: 20px;
-            border: 1px solid rgba(0, 255, 255, 0.2);
+            border: 1px solid rgba(255, 215, 0, 0.2);
             transition: all 0.3s ease;
             position: relative;
             overflow: hidden;
@@ -696,20 +782,20 @@
             left: 0;
             right: 0;
             height: 3px;
-            background: linear-gradient(90deg, #00ffff, #ff00ff);
+            background: linear-gradient(90deg, #ffd700, #ff6b35);
         }
 
         .mentor-card:hover {
             transform: translateY(-10px);
-            box-shadow: 0 20px 40px rgba(0, 255, 255, 0.2);
-            border-color: #00ffff;
+            box-shadow: 0 20px 40px rgba(255, 215, 0, 0.2);
+            border-color: #ffd700;
         }
 
         .mentor-card .mentor-photo {
             width: 150px;
             height: 150px;
             border-radius: 50%;
-            background: linear-gradient(45deg, #00ffff, #ff00ff);
+            background: linear-gradient(45deg, #ffd700, #ff6b35);
             margin: 0 auto 1.5rem;
             display: flex;
             align-items: center;
@@ -735,19 +821,19 @@
         }
 
         .mentor-card h3 {
-            color: #00ffff;
+            color: #ffd700;
             margin-bottom: 0.5rem;
             font-size: 1.3rem;
         }
 
         .mentor-role {
-            color: #ff00ff;
+            color: #ff6b35;
             font-weight: bold;
             margin-bottom: 1rem;
         }
 
         .mentor-description {
-            color: #cccccc;
+            color: #e0e0e0;
             line-height: 1.6;
             font-size: 0.95rem;
         }
@@ -763,20 +849,20 @@
         .unique-item {
             text-align: center;
             padding: 2rem;
-            background: rgba(255, 255, 255, 0.05);
+            background: rgba(255, 255, 255, 0.03);
             border-radius: 15px;
-            border: 1px solid rgba(255, 0, 255, 0.2);
+            border: 1px solid rgba(255, 107, 53, 0.2);
             transition: all 0.3s ease;
         }
 
         .unique-item:hover {
             transform: translateY(-5px);
-            box-shadow: 0 10px 25px rgba(255, 0, 255, 0.2);
+            box-shadow: 0 10px 25px rgba(255, 107, 53, 0.2);
         }
 
         .unique-icon {
             font-size: 3rem;
-            color: #ff00ff;
+            color: #ff6b35;
             margin-bottom: 1rem;
         }
 
@@ -785,9 +871,9 @@
             max-width: 600px;
             margin: 0 auto;
             padding: 2rem;
-            background: rgba(0, 255, 255, 0.05);
+            background: rgba(255, 215, 0, 0.05);
             border-radius: 15px;
-            border: 1px solid rgba(0, 255, 255, 0.2);
+            border: 1px solid rgba(255, 215, 0, 0.2);
         }
 
         .form-iframe {
@@ -800,7 +886,7 @@
 
         /* Contact Section */
         .contact {
-            background: rgba(10, 10, 10, 0.9);
+            background: rgba(0, 0, 0, 0.9);
             padding: 3rem 0;
             text-align: center;
         }
@@ -817,7 +903,7 @@
             display: flex;
             align-items: center;
             gap: 0.5rem;
-            color: #00ffff;
+            color: #ffd700;
         }
 
         .social-links {
@@ -828,13 +914,13 @@
         }
 
         .social-links a {
-            color: #ff00ff;
+            color: #ff6b35;
             font-size: 1.5rem;
             transition: all 0.3s ease;
         }
 
         .social-links a:hover {
-            color: #00ffff;
+            color: #ffd700;
             transform: scale(1.2);
         }
 
@@ -871,8 +957,24 @@
             }
 
             .rocket-container {
-                width: 200px;
-                height: 200px;
+                width: 150px;
+                height: 450px;
+            }
+
+            .hero-content {
+                animation: heroContentFromBottomLeftMobile 3s ease-out forwards;
+                animation-delay: 2s;
+            }
+
+            @keyframes heroContentFromBottomLeftMobile {
+                0% {
+                    opacity: 0;
+                    transform: translate(-200px, 200px) scale(0.5) rotate(-15deg);
+                }
+                100% {
+                    opacity: 1;
+                    transform: translate(0, 0) scale(1) rotate(0deg);
+                }
             }
         }
 
@@ -904,18 +1006,22 @@
     </style>
 </head>
 <body>
-    <canvas id="particle-canvas"></canvas>
+    <div id="space-canvas"></div>
+    
+    <!-- Interstellar Stars Background -->
+    <div class="stars" id="stars"></div>
 
-    <!-- Rocket Animation -->
+    <!-- Realistic Rocket Animation -->
     <div class="rocket-container">
-        <div class="rocket">
-            <div class="rocket-body"></div>
-            <div class="rocket-fins left"></div>
-            <div class="rocket-fins right"></div>
-            <div class="rocket-flame"></div>
-            <div class="smoke-trail" style="bottom: -80px; left: 20px; animation-delay: -0.1s;"></div>
-            <div class="smoke-trail" style="bottom: -100px; left: 30px; animation-delay: -0.2s;"></div>
-            <div class="smoke-trail" style="bottom: -120px; left: 25px; animation-delay: -0.3s;"></div>
+        <div class="realistic-rocket">
+            <div class="rocket-nose"></div>
+            <div class="rocket-main-body"></div>
+            <div class="booster left"></div>
+            <div class="booster right"></div>
+            <div class="engine-flame"></div>
+            <div class="booster-flame left"></div>
+            <div class="booster-flame right"></div>
+            <div class="exhaust-trail"></div>
         </div>
     </div>
 
@@ -1209,156 +1315,24 @@
     </section>
 
     <script>
-        // Advanced Particle System with Physics
-        class ParticleSystem {
-            constructor() {
-                this.canvas = document.getElementById('particle-canvas');
-                this.ctx = this.canvas.getContext('2d');
-                this.particles = [];
-                this.maxParticles = 150;
-                this.connections = [];
-                
-                this.resize();
-                this.init();
-                this.animate();
-                
-                window.addEventListener('resize', () => this.resize());
-                this.canvas.addEventListener('mousemove', (e) => this.handleMouseMove(e));
-            }
+        // Interstellar Stars Background
+        function createStars() {
+            const starsContainer = document.getElementById('stars');
+            const numberOfStars = 200;
             
-            resize() {
-                this.canvas.width = window.innerWidth;
-                this.canvas.height = window.innerHeight;
-            }
-            
-            init() {
-                for (let i = 0; i < this.maxParticles; i++) {
-                    this.particles.push({
-                        x: Math.random() * this.canvas.width,
-                        y: Math.random() * this.canvas.height,
-                        vx: (Math.random() - 0.5) * 1,
-                        vy: (Math.random() - 0.5) * 1,
-                        radius: Math.random() * 3 + 1,
-                        color: Math.random() > 0.5 ? '#00ffff' : '#ff00ff',
-                        opacity: Math.random() * 0.8 + 0.2,
-                        trail: []
-                    });
-                }
-            }
-            
-            handleMouseMove(e) {
-                const mouseX = e.clientX;
-                const mouseY = e.clientY;
-                
-                this.particles.forEach(particle => {
-                    const dx = mouseX - particle.x;
-                    const dy = mouseY - particle.y;
-                    const distance = Math.sqrt(dx * dx + dy * dy);
-                    
-                    if (distance < 100) {
-                        const force = (100 - distance) / 100;
-                        particle.vx += (dx / distance) * force * 0.1;
-                        particle.vy += (dy / distance) * force * 0.1;
-                    }
-                });
-            }
-            
-            animate() {
-                this.ctx.fillStyle = 'rgba(10, 10, 10, 0.1)';
-                this.ctx.fillRect(0, 0, this.canvas.width, this.canvas.height);
-                
-                this.particles.forEach((particle, index) => {
-                    // Update position
-                    particle.x += particle.vx;
-                    particle.y += particle.vy;
-                    
-                    // Apply friction
-                    particle.vx *= 0.99;
-                    particle.vy *= 0.99;
-                    
-                    // Boundary check with bounce
-                    if (particle.x < 0 || particle.x > this.canvas.width) {
-                        particle.vx *= -0.8;
-                        particle.x = Math.max(0, Math.min(this.canvas.width, particle.x));
-                    }
-                    if (particle.y < 0 || particle.y > this.canvas.height) {
-                        particle.vy *= -0.8;
-                        particle.y = Math.max(0, Math.min(this.canvas.height, particle.y));
-                    }
-                    
-                    // Update trail
-                    particle.trail.push({x: particle.x, y: particle.y});
-                    if (particle.trail.length > 10) {
-                        particle.trail.shift();
-                    }
-                    
-                    // Draw trail
-                    if (particle.trail.length > 1) {
-                        this.ctx.beginPath();
-                        this.ctx.moveTo(particle.trail[0].x, particle.trail[0].y);
-                        for (let i = 1; i < particle.trail.length; i++) {
-                            this.ctx.lineTo(particle.trail[i].x, particle.trail[i].y);
-                        }
-                        this.ctx.strokeStyle = particle.color;
-                        this.ctx.globalAlpha = 0.3;
-                        this.ctx.lineWidth = particle.radius / 2;
-                        this.ctx.stroke();
-                    }
-                    
-                    // Draw particle with glow effect
-                    const gradient = this.ctx.createRadialGradient(
-                        particle.x, particle.y, 0,
-                        particle.x, particle.y, particle.radius * 3
-                    );
-                    gradient.addColorStop(0, particle.color);
-                    gradient.addColorStop(1, 'transparent');
-                    
-                    this.ctx.beginPath();
-                    this.ctx.arc(particle.x, particle.y, particle.radius * 3, 0, Math.PI * 2);
-                    this.ctx.fillStyle = gradient;
-                    this.ctx.globalAlpha = particle.opacity * 0.5;
-                    this.ctx.fill();
-                    
-                    this.ctx.beginPath();
-                    this.ctx.arc(particle.x, particle.y, particle.radius, 0, Math.PI * 2);
-                    this.ctx.fillStyle = particle.color;
-                    this.ctx.globalAlpha = particle.opacity;
-                    this.ctx.fill();
-                    
-                    // Draw connections
-                    for (let j = index + 1; j < this.particles.length; j++) {
-                        const otherParticle = this.particles[j];
-                        const dx = particle.x - otherParticle.x;
-                        const dy = particle.y - otherParticle.y;
-                        const distance = Math.sqrt(dx * dx + dy * dy);
-                        
-                        if (distance < 150) {
-                            this.ctx.beginPath();
-                            this.ctx.moveTo(particle.x, particle.y);
-                            this.ctx.lineTo(otherParticle.x, otherParticle.y);
-                            
-                            const gradient = this.ctx.createLinearGradient(
-                                particle.x, particle.y,
-                                otherParticle.x, otherParticle.y
-                            );
-                            gradient.addColorStop(0, particle.color);
-                            gradient.addColorStop(1, otherParticle.color);
-                            
-                            this.ctx.strokeStyle = gradient;
-                            this.ctx.globalAlpha = (150 - distance) / 150 * 0.3;
-                            this.ctx.lineWidth = 1;
-                            this.ctx.stroke();
-                        }
-                    }
-                });
-                
-                this.ctx.globalAlpha = 1;
-                requestAnimationFrame(() => this.animate());
+            for (let i = 0; i < numberOfStars; i++) {
+                const star = document.createElement('div');
+                star.className = 'star';
+                star.style.left = Math.random() * 100 + '%';
+                star.style.top = Math.random() * 100 + '%';
+                star.style.width = star.style.height = Math.random() * 3 + 1 + 'px';
+                star.style.animationDelay = Math.random() * 3 + 's';
+                star.style.animationDuration = (Math.random() * 3 + 2) + 's';
+                starsContainer.appendChild(star);
             }
         }
         
-        // Initialize particle system
-        new ParticleSystem();
+        createStars();
 
         // Advanced Gallery System
         class GallerySystem {
@@ -1588,26 +1562,6 @@
         
         document.querySelectorAll('.fade-in').forEach(el => {
             observer.observe(el);
-        });
-
-        // Add rocket sound effect (optional)
-        function playRocketSound() {
-            // You can add audio here if needed
-            // const audio = new Audio('rocket-sound.mp3');
-            // audio.play();
-        }
-
-        // Trigger rocket sound when animation starts
-        setTimeout(playRocketSound, 500);
-
-        // Add parallax effect to hero section
-        window.addEventListener('scroll', () => {
-            const scrolled = window.pageYOffset;
-            const parallax = document.querySelector('.hero-content');
-            if (parallax) {
-                const speed = scrolled * 0.2;
-                parallax.style.transform = `translateY(${speed}px)`;
-            }
         });
     </script>
 </body>
