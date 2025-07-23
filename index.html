@@ -13,240 +13,325 @@
 
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: #000000;
+            background: #000000 url('https://images.unsplash.com/photo-1419242902214-272b3f66ee7a?w=1920&h=1080&fit=crop') center/cover fixed;
             color: #ffffff;
             overflow-x: hidden;
         }
 
-        /* Interstellar Space Background */
-        #space-canvas {
+        /* Background overlay for better text readability */
+        body::before {
+            content: '';
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
+            background: rgba(0, 0, 0, 0.3);
             z-index: -1;
-            pointer-events: none;
-            background: radial-gradient(ellipse at center, #1a1a2e 0%, #16213e 50%, #0f0f23 100%);
         }
 
-        .stars {
+        /* VYOM Background Text with Black Hole */
+        .vyom-background {
             position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 15vw;
+            font-weight: 900;
+            color: rgba(255, 255, 255, 0.03);
             z-index: -1;
             pointer-events: none;
+            font-family: 'Arial Black', sans-serif;
+            letter-spacing: 0.1em;
+            user-select: none;
         }
 
-        .star {
-            position: absolute;
-            background: white;
+        .vyom-letter {
+            display: inline-block;
+            position: relative;
+        }
+
+        .black-hole {
+            display: inline-block;
+            width: 0.8em;
+            height: 0.8em;
             border-radius: 50%;
-            animation: twinkle 3s infinite;
+            background: radial-gradient(circle at 30% 30%, 
+                transparent 0%, 
+                transparent 40%, 
+                rgba(255, 100, 0, 0.3) 45%, 
+                rgba(255, 50, 0, 0.6) 50%, 
+                rgba(255, 0, 0, 0.8) 55%, 
+                #000000 60%, 
+                #000000 100%);
+            box-shadow: 
+                0 0 50px rgba(255, 100, 0, 0.5),
+                inset 0 0 30px rgba(0, 0, 0, 0.8);
+            animation: blackHoleRotate 10s linear infinite;
+            position: relative;
+            margin: 0 0.05em;
         }
 
-        @keyframes twinkle {
-            0%, 100% { opacity: 0.3; }
-            50% { opacity: 1; }
+        .black-hole::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 120%;
+            height: 120%;
+            border-radius: 50%;
+            background: conic-gradient(
+                from 0deg,
+                transparent 0deg,
+                rgba(255, 100, 0, 0.2) 90deg,
+                rgba(255, 50, 0, 0.3) 180deg,
+                rgba(255, 0, 0, 0.2) 270deg,
+                transparent 360deg
+            );
+            transform: translate(-50%, -50%);
+            animation: blackHoleRotate 3s linear infinite reverse;
         }
 
-        /* Realistic Rocket Animation */
-        .rocket-container {
+        @keyframes blackHoleRotate {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        /* Realistic 3D Space Shuttle */
+        .shuttle-container {
             position: fixed;
-            bottom: -400px;
-            left: -300px;
-            width: 200px;
+            bottom: -500px;
+            left: -400px;
+            width: 300px;
             height: 600px;
             z-index: 5;
             pointer-events: none;
-            animation: realisticRocketFlight 8s ease-out forwards;
+            animation: shuttleFlight 10s ease-out forwards;
             animation-delay: 1s;
+            filter: drop-shadow(20px 20px 40px rgba(0, 0, 0, 0.8));
         }
 
-        .realistic-rocket {
+        .space-shuttle {
             position: relative;
             width: 100%;
             height: 100%;
-            transform: rotate(65deg);
+            transform: rotate(45deg);
+            transform-style: preserve-3d;
         }
 
-        /* Main rocket body */
-        .rocket-main-body {
+        /* Main shuttle body */
+        .shuttle-body {
             position: absolute;
-            width: 40px;
+            width: 80px;
             height: 300px;
-            background: linear-gradient(180deg, #f8f9fa 0%, #e9ecef 20%, #dee2e6 40%, #ced4da 100%);
-            border-radius: 20px 20px 5px 5px;
+            background: linear-gradient(135deg, 
+                #f8f9fa 0%, 
+                #e9ecef 25%, 
+                #dee2e6 50%, 
+                #ced4da 75%, 
+                #adb5bd 100%);
+            border-radius: 40px 40px 10px 10px;
             left: 50%;
-            top: 100px;
+            top: 150px;
             transform: translateX(-50%);
             box-shadow: 
-                inset -5px 0 10px rgba(0,0,0,0.3),
-                0 0 20px rgba(255,255,255,0.1);
+                inset -15px 0 30px rgba(0,0,0,0.4),
+                inset 15px 0 20px rgba(255,255,255,0.2),
+                0 0 30px rgba(255,255,255,0.1);
         }
 
-        /* Rocket nose cone */
-        .rocket-nose {
+        /* Shuttle nose */
+        .shuttle-nose {
             position: absolute;
-            width: 0;
-            height: 0;
-            border-left: 20px solid transparent;
-            border-right: 20px solid transparent;
-            border-bottom: 80px solid #ff4757;
+            width: 80px;
+            height: 120px;
+            background: linear-gradient(135deg, 
+                #343a40 0%, 
+                #495057 50%, 
+                #6c757d 100%);
+            border-radius: 40px 40px 0 0;
             left: 50%;
-            top: 20px;
+            top: 30px;
             transform: translateX(-50%);
-            filter: drop-shadow(0 0 10px rgba(255, 71, 87, 0.5));
+            box-shadow: 
+                inset -10px 0 20px rgba(0,0,0,0.3),
+                inset 10px 0 15px rgba(255,255,255,0.1);
+            clip-path: polygon(0 100%, 50% 0, 100% 100%);
         }
 
-        /* Side boosters */
-        .booster {
+        /* Wings */
+        .shuttle-wing {
             position: absolute;
-            width: 25px;
-            height: 200px;
-            background: linear-gradient(180deg, #6c757d 0%, #495057 50%, #343a40 100%);
-            border-radius: 12px 12px 3px 3px;
-            box-shadow: inset -3px 0 8px rgba(0,0,0,0.4);
-        }
-
-        .booster.left {
-            left: 5px;
-            top: 150px;
-        }
-
-        .booster.right {
-            right: 5px;
-            top: 150px;
-        }
-
-        /* Realistic engine flames */
-        .engine-flame {
-            position: absolute;
-            bottom: -150px;
-            left: 50%;
-            transform: translateX(-50%);
             width: 60px;
-            height: 200px;
+            height: 150px;
+            background: linear-gradient(135deg, 
+                #6c757d 0%, 
+                #495057 50%, 
+                #343a40 100%);
+            box-shadow: 
+                inset -8px 0 15px rgba(0,0,0,0.4),
+                inset 8px 0 10px rgba(255,255,255,0.1);
+        }
+
+        .shuttle-wing.left {
+            left: -30px;
+            top: 250px;
+            transform: rotate(-15deg);
+            clip-path: polygon(100% 0, 100% 80%, 0 100%, 0 20%);
+        }
+
+        .shuttle-wing.right {
+            right: -30px;
+            top: 250px;
+            transform: rotate(15deg);
+            clip-path: polygon(0 0, 0 80%, 100% 100%, 100% 20%);
+        }
+
+        /* External fuel tank */
+        .fuel-tank {
+            position: absolute;
+            width: 50px;
+            height: 280px;
+            background: linear-gradient(135deg, 
+                #fd7e14 0%, 
+                #e85d04 50%, 
+                #d63384 100%);
+            border-radius: 25px;
+            left: 50%;
+            top: 180px;
+            transform: translateX(-130px);
+            box-shadow: 
+                inset -8px 0 15px rgba(0,0,0,0.3),
+                inset 8px 0 10px rgba(255,255,255,0.1);
+        }
+
+        /* Solid rocket boosters */
+        .rocket-booster {
+            position: absolute;
+            width: 35px;
+            height: 320px;
+            background: linear-gradient(135deg, 
+                #f8f9fa 0%, 
+                #e9ecef 50%, 
+                #ced4da 100%);
+            border-radius: 17px;
+            box-shadow: 
+                inset -5px 0 10px rgba(0,0,0,0.3),
+                inset 5px 0 8px rgba(255,255,255,0.1);
+        }
+
+        .rocket-booster.left {
+            left: 50%;
+            top: 160px;
+            transform: translateX(-170px);
+        }
+
+        .rocket-booster.right {
+            left: 50%;
+            top: 160px;
+            transform: translateX(-90px);
+        }
+
+        /* Engine flames */
+        .shuttle-flame {
+            position: absolute;
+            bottom: -200px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100px;
+            height: 250px;
             background: linear-gradient(180deg, 
                 #ffd700 0%,
-                #ff6b35 20%, 
-                #ff4757 40%,
-                #3742fa 70%,
+                #ff8500 20%, 
+                #ff6b35 40%,
+                #e63946 60%,
+                #1d3557 80%,
                 transparent 100%);
             border-radius: 50%;
-            animation: engineFlame 0.1s ease-in-out infinite;
-            filter: blur(2px);
+            animation: shuttleEngineFlame 0.1s ease-in-out infinite;
+            filter: blur(3px);
         }
 
         .booster-flame {
             position: absolute;
-            width: 35px;
-            height: 120px;
+            width: 50px;
+            height: 180px;
             background: linear-gradient(180deg, 
                 #ffd700 0%,
-                #ff6b35 30%, 
-                #ff4757 60%,
+                #ff8500 30%, 
+                #ff6b35 60%,
                 transparent 100%);
             border-radius: 50%;
-            animation: engineFlame 0.15s ease-in-out infinite;
-            filter: blur(1px);
+            animation: shuttleEngineFlame 0.15s ease-in-out infinite;
+            filter: blur(2px);
         }
 
         .booster-flame.left {
-            left: 17px;
-            bottom: -100px;
+            left: 50%;
+            bottom: -160px;
+            transform: translateX(-170px);
         }
 
         .booster-flame.right {
-            right: 17px;
-            bottom: -100px;
-        }
-
-        /* Exhaust trail */
-        .exhaust-trail {
-            position: absolute;
-            width: 80px;
-            height: 300px;
-            background: linear-gradient(180deg, 
-                rgba(255, 215, 0, 0.3) 0%,
-                rgba(255, 107, 53, 0.2) 30%,
-                rgba(255, 71, 87, 0.1) 60%,
-                transparent 100%);
-            bottom: -400px;
             left: 50%;
-            transform: translateX(-50%);
-            border-radius: 50%;
-            animation: exhaustTrail 0.2s ease-in-out infinite;
-            filter: blur(3px);
+            bottom: -160px;
+            transform: translateX(-90px);
         }
 
-        @keyframes realisticRocketFlight {
+        @keyframes shuttleFlight {
             0% {
-                bottom: -400px;
-                left: -300px;
-                transform: rotate(-35deg) scale(0.8);
+                bottom: -500px;
+                left: -400px;
+                transform: rotate(-45deg) scale(0.6);
                 opacity: 0;
             }
             15% {
                 opacity: 1;
-                transform: rotate(-35deg) scale(1);
+                transform: rotate(-35deg) scale(0.8);
             }
-            25% {
+            30% {
                 bottom: 20vh;
-                left: 10vw;
-                transform: rotate(-25deg) scale(1.1);
+                left: 15vw;
+                transform: rotate(-25deg) scale(1);
             }
             50% {
                 bottom: 50vh;
-                left: 30vw;
-                transform: rotate(-15deg) scale(1.2);
+                left: 35vw;
+                transform: rotate(-15deg) scale(1.1);
             }
-            75% {
+            70% {
                 bottom: 80vh;
                 left: 60vw;
-                transform: rotate(-5deg) scale(1.3);
+                transform: rotate(-5deg) scale(1.2);
             }
             100% {
-                bottom: 120vh;
-                left: 90vw;
-                transform: rotate(10deg) scale(1.4);
-                opacity: 0.3;
+                bottom: 130vh;
+                left: 95vw;
+                transform: rotate(15deg) scale(1.3);
+                opacity: 0.2;
             }
         }
 
-        @keyframes engineFlame {
+        @keyframes shuttleEngineFlame {
             0%, 100% { 
                 transform: translateX(-50%) scaleY(1) scaleX(1); 
                 opacity: 0.9;
             }
             25% { 
-                transform: translateX(-50%) scaleY(1.3) scaleX(0.7); 
+                transform: translateX(-50%) scaleY(1.4) scaleX(0.6); 
                 opacity: 1;
             }
             50% { 
-                transform: translateX(-50%) scaleY(0.8) scaleX(1.2); 
+                transform: translateX(-50%) scaleY(0.7) scaleX(1.3); 
                 opacity: 0.8;
             }
             75% { 
-                transform: translateX(-50%) scaleY(1.1) scaleX(0.9); 
+                transform: translateX(-50%) scaleY(1.2) scaleX(0.8); 
                 opacity: 0.95;
             }
         }
 
-        @keyframes exhaustTrail {
-            0%, 100% {
-                transform: translateX(-50%) scaleY(1);
-                opacity: 0.6;
-            }
-            50% {
-                transform: translateX(-50%) scaleY(1.2);
-                opacity: 0.8;
-            }
-        }
-
-        /* Navigation */
+        /* Navigation with Logo */
         nav {
             position: fixed;
             top: 0;
@@ -273,7 +358,31 @@
             padding: 0 2rem;
         }
 
-        .logo {
+        .logo-section {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .logo-image {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: linear-gradient(45deg, #ffd700, #ff6b35);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            box-shadow: 0 0 15px rgba(255, 215, 0, 0.3);
+            transition: all 0.3s ease;
+        }
+
+        .logo-image:hover {
+            transform: scale(1.1);
+            box-shadow: 0 0 25px rgba(255, 215, 0, 0.5);
+        }
+
+        .logo-text {
             font-size: 1.5rem;
             font-weight: bold;
             color: #ffd700;
@@ -300,7 +409,7 @@
             text-shadow: 0 0 5px #ffd700;
         }
 
-        /* Hero Section - Content from bottom-left */
+        /* Hero Section */
         .hero {
             height: 100vh;
             display: flex;
@@ -319,7 +428,7 @@
             opacity: 0;
             transform: translate(-400px, 300px) scale(0.5);
             animation: heroContentFromBottomLeft 3s ease-out forwards;
-            animation-delay: 2s;
+            animation-delay: 2.5s;
         }
 
         @keyframes heroContentFromBottomLeft {
@@ -450,10 +559,10 @@
             box-shadow: 0 10px 25px rgba(255, 215, 0, 0.4);
         }
 
-        /* Advanced Image Gallery */
+        /* Circular Gallery Preview System */
         .gallery-section {
             padding: 5rem 0;
-            background: rgba(0, 0, 0, 0.8);
+            background: rgba(0, 0, 0, 0.7);
         }
 
         .gallery-container {
@@ -498,6 +607,55 @@
 
         .gallery-display:hover .gallery-overlay {
             transform: translateY(0);
+        }
+
+        .circular-preview-container {
+            position: absolute;
+            right: 20px;
+            top: 20px;
+            z-index: 10;
+        }
+
+        .circular-preview {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            overflow: hidden;
+            border: 3px solid #ffd700;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            background: rgba(0, 0, 0, 0.5);
+            position: relative;
+        }
+
+        .circular-preview:hover {
+            transform: scale(1.2);
+            border-color: #ff6b35;
+            box-shadow: 0 0 20px rgba(255, 215, 0, 0.5);
+        }
+
+        .circular-preview img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            opacity: 0.8;
+            transition: opacity 0.3s ease;
+        }
+
+        .circular-preview:hover img {
+            opacity: 1;
+        }
+
+        .circular-preview::after {
+            content: 'Next';
+            position: absolute;
+            bottom: -25px;
+            left: 50%;
+            transform: translateX(-50%);
+            color: #ffd700;
+            font-size: 0.8rem;
+            font-weight: bold;
+            text-shadow: 0 0 5px rgba(0, 0, 0, 0.8);
         }
 
         .gallery-info {
@@ -886,7 +1044,7 @@
 
         /* Contact Section */
         .contact {
-            background: rgba(0, 0, 0, 0.9);
+            background: rgba(0, 0, 0, 0.8);
             padding: 3rem 0;
             text-align: center;
         }
@@ -930,6 +1088,24 @@
                 display: none;
             }
 
+            .logo-section {
+                gap: 0.5rem;
+            }
+
+            .logo-image {
+                width: 40px;
+                height: 40px;
+                font-size: 1.2rem;
+            }
+
+            .logo-text {
+                font-size: 1.2rem;
+            }
+
+            .vyom-background {
+                font-size: 20vw;
+            }
+
             .hero h1 {
                 font-size: 2.5rem;
             }
@@ -952,18 +1128,19 @@
                 flex-direction: column;
             }
 
-            .gallery-thumbnails {
-                grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+            .shuttle-container {
+                width: 200px;
+                height: 400px;
             }
 
-            .rocket-container {
-                width: 150px;
-                height: 450px;
+            .circular-preview {
+                width: 60px;
+                height: 60px;
             }
 
             .hero-content {
                 animation: heroContentFromBottomLeftMobile 3s ease-out forwards;
-                animation-delay: 2s;
+                animation-delay: 2.5s;
             }
 
             @keyframes heroContentFromBottomLeftMobile {
@@ -1006,29 +1183,39 @@
     </style>
 </head>
 <body>
-    <div id="space-canvas"></div>
-    
-    <!-- Interstellar Stars Background -->
-    <div class="stars" id="stars"></div>
+    <!-- VYOM Background Text with Black Hole -->
+    <div class="vyom-background">
+        <span class="vyom-letter">V</span>
+        <span class="vyom-letter">Y</span>
+        <div class="black-hole"></div>
+        <span class="vyom-letter">M</span>
+    </div>
 
-    <!-- Realistic Rocket Animation -->
-    <div class="rocket-container">
-        <div class="realistic-rocket">
-            <div class="rocket-nose"></div>
-            <div class="rocket-main-body"></div>
-            <div class="booster left"></div>
-            <div class="booster right"></div>
-            <div class="engine-flame"></div>
+    <!-- Realistic 3D Space Shuttle -->
+    <div class="shuttle-container">
+        <div class="space-shuttle">
+            <div class="shuttle-nose"></div>
+            <div class="shuttle-body"></div>
+            <div class="shuttle-wing left"></div>
+            <div class="shuttle-wing right"></div>
+            <div class="fuel-tank"></div>
+            <div class="rocket-booster left"></div>
+            <div class="rocket-booster right"></div>
+            <div class="shuttle-flame"></div>
             <div class="booster-flame left"></div>
             <div class="booster-flame right"></div>
-            <div class="exhaust-trail"></div>
         </div>
     </div>
 
-    <!-- Navigation -->
+    <!-- Navigation with Logo -->
     <nav id="navbar">
         <div class="nav-container">
-            <div class="logo">🚀 Astrophysics Club</div>
+            <div class="logo-section">
+                <div class="logo-image">
+                    <img src="logo.png" alt="Logo" style="width:100%;height:100%;object-fit:cover;border-radius:50%;display:block;" />
+                </div>
+                <div class="logo-text">🚀 Astrophysics Club</div>
+            </div>
             <ul class="nav-links">
                 <li><a href="#about">About Us</a></li>
                 <li><a href="#gallery">Gallery</a></li>
@@ -1065,6 +1252,11 @@
             <div class="gallery-main">
                 <div class="gallery-display">
                     <img id="main-image" src="https://images.unsplash.com/photo-1446776653964-20c1d3a81b06?w=800&h=500&fit=crop" alt="Observatory" class="gallery-image">
+                    <div class="circular-preview-container">
+                        <div class="circular-preview" id="next-preview">
+                            <img id="preview-image" src="https://images.unsplash.com/photo-1462331940025-496dfbfc7564?w=800&h=500&fit=crop" alt="Next Image">
+                        </div>
+                    </div>
                     <div class="gallery-overlay">
                         <h3 id="image-title">University Observatory</h3>
                         <p id="image-description">Our state-of-the-art observatory facility equipped with advanced telescopes for deep space observation.</p>
@@ -1315,26 +1507,7 @@
     </section>
 
     <script>
-        // Interstellar Stars Background
-        function createStars() {
-            const starsContainer = document.getElementById('stars');
-            const numberOfStars = 200;
-            
-            for (let i = 0; i < numberOfStars; i++) {
-                const star = document.createElement('div');
-                star.className = 'star';
-                star.style.left = Math.random() * 100 + '%';
-                star.style.top = Math.random() * 100 + '%';
-                star.style.width = star.style.height = Math.random() * 3 + 1 + 'px';
-                star.style.animationDelay = Math.random() * 3 + 's';
-                star.style.animationDuration = (Math.random() * 3 + 2) + 's';
-                starsContainer.appendChild(star);
-            }
-        }
-        
-        createStars();
-
-        // Advanced Gallery System
+        // Advanced Gallery System with Circular Preview
         class GallerySystem {
             constructor() {
                 this.currentIndex = 0;
@@ -1414,6 +1587,11 @@
                 document.getElementById('auto-btn').addEventListener('click', () => {
                     this.toggleAutoPlay();
                 });
+
+                // Circular preview click
+                document.getElementById('next-preview').addEventListener('click', () => {
+                    this.showImage(this.currentIndex + 1);
+                });
                 
                 // Keyboard navigation
                 document.addEventListener('keydown', (e) => {
@@ -1432,6 +1610,8 @@
                 
                 this.currentIndex = index;
                 const image = this.images[index];
+                const nextIndex = (index + 1) % this.images.length;
+                const nextImage = this.images[nextIndex];
                 
                 // Update main image with fade effect
                 const mainImage = document.getElementById('main-image');
@@ -1442,6 +1622,11 @@
                     mainImage.alt = image.title;
                     mainImage.style.opacity = '1';
                 }, 150);
+                
+                // Update circular preview
+                const previewImage = document.getElementById('preview-image');
+                previewImage.src = nextImage.src;
+                previewImage.alt = nextImage.title;
                 
                 // Update overlay content
                 document.getElementById('image-title').textContent = image.title;
@@ -1459,10 +1644,6 @@
                 document.querySelectorAll('.thumbnail').forEach((thumb, i) => {
                     thumb.classList.toggle('active', i === index);
                 });
-                
-                // Update navigation buttons
-                document.getElementById('prev-btn').disabled = false;
-                document.getElementById('next-btn').disabled = false;
             }
             
             toggleAutoPlay() {
