@@ -728,8 +728,8 @@
             border-color: #ffd700;
         }
 
-        .mentor-card .mentor-photo {
-            width:400px;
+        .mentor-card ..mentor-photo {
+            width: 400px;
             height: 400px;
             border-radius: 50%;
             background: linear-gradient(45deg, #ffd700, #ff6b35);
@@ -743,8 +743,13 @@
             position: relative;
             overflow: hidden;
             animation: float 4s ease-in-out infinite;
-            background: url('mentor.jpg') ;
+        
+            background-image: url('mentor.jpg');
+            background-size: contain; /* 👈 zooms out to fit the circle */
+            background-repeat: no-repeat;
+            background-position: center;
         }
+
 
         @keyframes float {
             0%, 100% { transform: translateY(0px); }
