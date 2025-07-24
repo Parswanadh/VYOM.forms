@@ -42,68 +42,6 @@
             z-index: -1;
         }
 
-        /* Original Shuttle Container */
-        .shuttle-container {
-            position: fixed;
-            bottom: -300px;
-            left: -300px;
-            width: 400px;
-            height: 400px;
-            z-index: 10;
-            pointer-events: none;
-            animation: shuttleFlight 12s ease-out forwards;
-            animation-delay: 1s;
-            filter: drop-shadow(20px 20px 40px rgba(0, 0, 0, 0.8));
-        }
-
-        .shuttle-image {
-            width: 100%;
-            height: 100%;
-            object-fit: contain;
-            transform: rotate(45deg);
-            transition: all 0.3s ease;
-        }
-
-        /* Enhanced shuttle flight animation */
-        @keyframes shuttleFlight {
-            0% {
-                bottom: -300px;
-                left: -300px;
-                transform: rotate(-45deg) scale(0.5);
-                opacity: 0;
-            }
-            10% {
-                opacity: 1;
-                transform: rotate(-35deg) scale(0.7);
-            }
-            25% {
-                bottom: 10vh;
-                left: 10vw;
-                transform: rotate(-25deg) scale(0.9);
-            }
-            50% {
-                bottom: 40vh;
-                left: 30vw;
-                transform: rotate(-15deg) scale(1.1);
-            }
-            75% {
-                bottom: 70vh;
-                left: 60vw;
-                transform: rotate(-5deg) scale(1.2);
-            }
-            90% {
-                bottom: 90vh;
-                left: 80vw;
-                transform: rotate(5deg) scale(1.3);
-            }
-            100% {
-                bottom: 120vh;
-                left: 110vw;
-                transform: rotate(15deg) scale(1.4);
-                opacity: 0.3;
-            }
-        }
-
         /* Perfect Navigation Alignment */
         nav {
             position: fixed;
@@ -231,27 +169,19 @@
             max-width: 800px;
             padding: 2rem;
             opacity: 0;
-            transform: translate(-400px, 300px) scale(0.5);
-            animation: heroContentFromBottomLeft 3s ease-out forwards;
-            animation-delay: 3s;
+            transform: translateY(50px);
+            animation: heroContentFadeIn 2s ease-out forwards;
+            animation-delay: 0.5s;
         }
 
-        @keyframes heroContentFromBottomLeft {
+        @keyframes heroContentFadeIn {
             0% {
                 opacity: 0;
-                transform: translate(-400px, 300px) scale(0.5) rotate(-15deg);
-            }
-            30% {
-                opacity: 0.5;
-                transform: translate(-200px, 150px) scale(0.7) rotate(-8deg);
-            }
-            60% {
-                opacity: 0.8;
-                transform: translate(-50px, 50px) scale(0.9) rotate(-3deg);
+                transform: translateY(50px);
             }
             100% {
                 opacity: 1;
-                transform: translate(0, 0) scale(1) rotate(0deg);
+                transform: translateY(0);
             }
         }
 
@@ -693,7 +623,7 @@
             color: #ff6b35;
         }
 
-        /* Enhanced Mentors Section with Photo Integration */
+        /* Mentors Section */
         .mentors-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
@@ -728,50 +658,38 @@
             border-color: #ffd700;
         }
 
-        /* Enhanced Mentor Photo with Real Image Support */
-        .mentor-photo {
+        .mentor-card .mentor-photo {
             width: 150px;
             height: 150px;
             border-radius: 50%;
-            margin: 0 auto 1.5rem;
-            position: relative;
-            overflow: hidden;
-            animation: float 4s ease-in-out infinite;
-            box-shadow: 0 0 20px rgba(255, 215, 0, 0.3);
-            border: 3px solid transparent;
             background: linear-gradient(45deg, #ffd700, #ff6b35);
-            transition: all 0.3s ease;
-        }
-
-        .mentor-photo:hover {
-            transform: scale(1.05);
-            box-shadow: 0 0 30px rgba(255, 215, 0, 0.5);
-            border-color: #ffd700;
-        }
-
-        .mentor-photo img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            border-radius: 50%;
-            display: block;
-        }
-
-        /* Fallback styling when no image is provided */
-        .mentor-photo .fallback-text {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
+            margin: 0 auto 1.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
             color: #000;
             font-weight: bold;
             font-size: 1.2rem;
-            text-align: center;
+            position: relative;
+            overflow: hidden;
+            animation: float 4s ease-in-out infinite;
         }
 
         @keyframes float {
             0%, 100% { transform: translateY(0px); }
             50% { transform: translateY(-10px); }
+        }
+
+        .mentor-card .mentor-photo::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 70%;
+            height: 60%;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 60%;
+            transform: translate(-50%, -50%);
         }
 
         .mentor-card h3 {
@@ -920,35 +838,9 @@
                 flex-direction: column;
             }
 
-            .shuttle-container {
-                width: 250px;
-                height: 250px;
-            }
-
             .circular-preview {
                 width: 60px;
                 height: 60px;
-            }
-
-            .mentor-photo {
-                width: 120px;
-                height: 120px;
-            }
-
-            .hero-content {
-                animation: heroContentFromBottomLeftMobile 3s ease-out forwards;
-                animation-delay: 3s;
-            }
-
-            @keyframes heroContentFromBottomLeftMobile {
-                0% {
-                    opacity: 0;
-                    transform: translate(-200px, 200px) scale(0.5) rotate(-15deg);
-                }
-                100% {
-                    opacity: 1;
-                    transform: translate(0, 0) scale(1) rotate(0deg);
-                }
             }
         }
 
@@ -980,11 +872,6 @@
     </style>
 </head>
 <body>
-    <!-- Original Shuttle Container -->
-    <div class="shuttle-container">
-        <img src="shuttle-removebg-preview.png" alt="Space Shuttle" class="shuttle-image">
-    </div>
-
     <!-- Perfectly Aligned Navigation -->
     <nav id="navbar">
         <div class="nav-container">
@@ -1185,18 +1072,14 @@
         </div>
     </section>
 
-    <!-- Enhanced Mentors Section with Integrated Photo -->
+    <!-- Mentors Section -->
     <section class="section" id="mentors">
         <div class="container">
             <h2 class="section-title fade-in">Our Mentors</h2>
             <div class="mentors-grid">
                 <div class="mentor-card fade-in perspective-card">
                     <div class="card-inner">
-                        <div class="mentor-photo">
-                            <!-- Replace 'mentor.jpg' with your actual mentor photo filename -->
-                            <img src="mentor.jpg" alt="Dr. Amelia Singh" onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
-                            <div class="fallback-text" style="display: none;">DR. AS</div>
-                        </div>
+                        <div class="mentor-photo">DR. AS</div>
                         <h3>Dr. Amelia Singh</h3>
                         <div class="mentor-role">Faculty Advisor | Stellar Astrophysics</div>
                         <p class="mentor-description">Dr. Singh specializes in stellar evolution and supernova research. She has published over 50 papers in leading astronomy journals and guides students in observational techniques and data analysis.</p>
@@ -1293,7 +1176,7 @@
                 this.autoPlay = false;
                 this.autoPlayInterval = null;
                 
-                // Updated with your image files - changed HEIC to JPG
+                // Updated with your image files including HAL_visit.jpg
                 this.images = [
                     {
                         src: "Coorg_star_gazing.jpg",
@@ -1302,7 +1185,7 @@
                         stats: {stat1: "25", stat2: "3", label1: "Participants", label2: "Days"}
                     },
                     {
-                        src: "HAL_visit.jpg", // Changed from .HEIC to .jpg
+                        src: "HAL_visit.jpg",
                         title: "HAL Aerospace Visit",
                         description: "Educational visit to Hindustan Aeronautics Limited (HAL) where members explored aerospace technology and learned about satellite systems and space missions from industry experts.",
                         stats: {stat1: "30", stat2: "6", label1: "Students", label2: "Hours"}
