@@ -377,7 +377,7 @@
             bottom: 0;
             left: 0;
             right: 0;
-            background: url('Coorg_star_gazing.jpg');
+            background: linear-gradient(transparent, rgba(0,0,0,0.8));
             padding: 2rem;
             color: white;
             transform: translateY(100%);
@@ -729,8 +729,8 @@
         }
 
         .mentor-card .mentor-photo {
-            width: 400px;
-            height: 400px;
+            width: 150px;
+            height: 150px;
             border-radius: 50%;
             background: linear-gradient(45deg, #ffd700, #ff6b35);
             margin: 0 auto 1.5rem;
@@ -743,13 +743,7 @@
             position: relative;
             overflow: hidden;
             animation: float 4s ease-in-out infinite;
-        
-            background-image: url('mentor.jpg');
-            background-size: contain; /* 👈 zooms out to fit the circle */
-            background-repeat: no-repeat;
-            background-position: center;
         }
-
 
         @keyframes float {
             0%, 100% { transform: translateY(0px); }
@@ -763,7 +757,7 @@
             left: 50%;
             width: 70%;
             height: 60%;
-            
+            background: rgba(255, 255, 255, 0.1);
             border-radius: 60%;
             transform: translate(-50%, -50%);
         }
@@ -1015,30 +1009,30 @@
             <h2 class="section-title fade-in">Our Cosmic Journey</h2>
             <div class="gallery-main">
                 <div class="gallery-display">
-                    <img id="main-image" src="https://images.unsplash.com/photo-1446776653964-20c1d3a81b06?w=800&h=500&fit=crop" alt="Observatory" class="gallery-image">
+                    <img id="main-image" src="Coorg_star_gazing.jpg" alt="Coorg Star Gazing" class="gallery-image">
                     <div class="circular-preview-container">
                         <div class="circular-preview" id="next-preview">
-                            <img id="preview-image" src="https://images.unsplash.com/photo-1462331940025-496dfbfc7564?w=800&h=500&fit=crop" alt="Next Image">
+                            <img id="preview-image" src="HAL_visit.HEIC" alt="HAL Visit">
                         </div>
                     </div>
                     <div class="gallery-overlay">
-                        <h3 id="image-title">Coorg Stargazing Party </h3>
-                        <p id="image-description">Our state-of-the-art observatory facility equipped with advanced telescopes for deep space observation.</p>
+                        <h3 id="image-title">Coorg Star Gazing Expedition</h3>
+                        <p id="image-description">Our club's amazing star gazing trip to Coorg, where we observed celestial wonders under pristine dark skies.</p>
                     </div>
                 </div>
                 <div class="gallery-info">
-                    <h3 class="gallery-title" id="info-title">University Observatory</h3>
+                    <h3 class="gallery-title" id="info-title">Coorg Star Gazing Expedition</h3>
                     <p class="gallery-description" id="info-description">
-                        Our state-of-the-art observatory facility equipped with advanced telescopes for deep space observation. Students have 24/7 access to conduct research and explore the cosmos.
+                        Our club's amazing star gazing trip to Coorg, where we observed celestial wonders under pristine dark skies. Members had the opportunity to use professional telescopes and learn practical astronomy skills.
                     </p>
                     <div class="gallery-stats">
                         <div class="stat-item">
-                            <div class="stat-number" id="stat1">15</div>
-                            <div class="stat-label">Telescopes</div>
+                            <div class="stat-number" id="stat1">25</div>
+                            <div class="stat-label">Participants</div>
                         </div>
                         <div class="stat-item">
-                            <div class="stat-number" id="stat2">500+</div>
-                            <div class="stat-label">Observations</div>
+                            <div class="stat-number" id="stat2">3</div>
+                            <div class="stat-label">Days</div>
                         </div>
                     </div>
                 </div>
@@ -1181,9 +1175,9 @@
             <div class="mentors-grid">
                 <div class="mentor-card fade-in perspective-card">
                     <div class="card-inner">
-                        <div class="mentor-photo"></div>
-                        <h3>Dr. Manjunath</h3>
-                        <div class="mentor-role">Club Mentor| Department of Physics</div>
+                        <div class="mentor-photo">DR. AS</div>
+                        <h3>Dr. Amelia Singh</h3>
+                        <div class="mentor-role">Faculty Advisor | Stellar Astrophysics</div>
                         <p class="mentor-description">Dr. Singh specializes in stellar evolution and supernova research. She has published over 50 papers in leading astronomy journals and guides students in observational techniques and data analysis.</p>
                     </div>
                 </div>
@@ -1271,39 +1265,38 @@
     </section>
 
     <script>
-        // Advanced Gallery System with Circular Preview
+        // Advanced Gallery System with Your Images
         class GallerySystem {
             constructor() {
                 this.currentIndex = 0;
                 this.autoPlay = false;
                 this.autoPlayInterval = null;
                 
+                // Updated with your image files
                 this.images = [
                     {
-                        src: "https://images.unsplash.com/photo-1446776653964-20c1d3a81b06?w=800&h=500&fit=crop",
-                        title: "University Observatory",
-                        description: "Our state-of-the-art observatory facility equipped with advanced telescopes for deep space observation. Students have 24/7 access to conduct research and explore the cosmos.",
-                        stats: {stat1: "15", stat2: "500+", label1: "Telescopes", label2: "Observations"}
+                        src: "Coorg_star_gazing.jpg",
+                        title: "Coorg Star Gazing Expedition",
+                        description: "Our club's amazing star gazing trip to Coorg, where we observed celestial wonders under pristine dark skies. Members had the opportunity to use professional telescopes and learn practical astronomy skills.",
+                        stats: {stat1: "25", stat2: "3", label1: "Participants", label2: "Days"}
                     },
                     {
-                        src: "https://images.unsplash.com/photo-1462331940025-496dfbfc7564?w=800&h=500&fit=crop",
-                        title: "Astrophotography Lab",
-                        description: "Advanced imaging equipment for capturing stunning photographs of celestial objects. Our lab features professional-grade cameras and specialized filters for different wavelengths.",
-                        stats: {stat1: "8", stat2: "200+", label1: "Cameras", label2: "Images Taken"}
+                        src: "HAL_visit.HEIC",
+                        title: "HAL Aerospace Visit",
+                        description: "Educational visit to Hindustan Aeronautics Limited (HAL) where members explored aerospace technology and learned about satellite systems and space missions from industry experts.",
+                        stats: {stat1: "30", stat2: "6", label1: "Students", label2: "Hours"}
                     },
-                    
                     {
-                        src: "https://images.unsplash.com/photo-1614728263952-84ea256f9679?w=800&h=500&fit=crop",
-                        title: "Planetarium",
-                        description: "Immersive dome theater for educational presentations and public outreach programs. Features 4K projection system and surround sound for an authentic space experience.",
-                        stats: {stat1: "120", stat2: "1000+", label1: "Seats", label2: "Visitors/Month"}
+                        src: "URSC_ISRO_visit.jpg",
+                        title: "URSC ISRO Center Visit",
+                        description: "Exclusive visit to ISRO's U R Rao Satellite Centre (URSC) where students witnessed satellite assembly processes and interacted with space scientists working on India's space missions.",
+                        stats: {stat1: "20", stat2: "8", label1: "Members", label2: "Presentations"}
                     },
-                   
                     {
-                        src: "https://images.unsplash.com/photo-1517976487492-5750f3195933?w=800&h=500&fit=crop",
-                        title: "Student Workshop",
-                        description: "Collaborative workspace where students build instruments, analyze data, and prepare presentations. Features 3D printers and electronics lab for custom equipment.",
-                        stats: {stat1: "30", stat2: "100+", label1: "Workbenches", label2: "Projects/Year"}
+                        src: "Visvesvaraya_visit.jpg",
+                        title: "Visvesvaraya Museum Visit",
+                        description: "Educational trip to the Visvesvaraya Industrial and Technological Museum, exploring interactive science exhibits and planetarium shows that enhanced our understanding of physics concepts.",
+                        stats: {stat1: "35", stat2: "4", label1: "Visitors", label2: "Exhibits"}
                     }
                 ];
                 
