@@ -42,6 +42,68 @@
             z-index: -1;
         }
 
+        /* Original Shuttle Container */
+        .shuttle-container {
+            position: fixed;
+            bottom: -300px;
+            left: -300px;
+            width: 400px;
+            height: 400px;
+            z-index: 10;
+            pointer-events: none;
+            animation: shuttleFlight 12s ease-out forwards;
+            animation-delay: 1s;
+            filter: drop-shadow(20px 20px 40px rgba(0, 0, 0, 0.8));
+        }
+
+        .shuttle-image {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            transform: rotate(45deg);
+            transition: all 0.3s ease;
+        }
+
+        /* Enhanced shuttle flight animation */
+        @keyframes shuttleFlight {
+            0% {
+                bottom: -300px;
+                left: -300px;
+                transform: rotate(-45deg) scale(0.5);
+                opacity: 0;
+            }
+            10% {
+                opacity: 1;
+                transform: rotate(-35deg) scale(0.7);
+            }
+            25% {
+                bottom: 10vh;
+                left: 10vw;
+                transform: rotate(-25deg) scale(0.9);
+            }
+            50% {
+                bottom: 40vh;
+                left: 30vw;
+                transform: rotate(-15deg) scale(1.1);
+            }
+            75% {
+                bottom: 70vh;
+                left: 60vw;
+                transform: rotate(-5deg) scale(1.2);
+            }
+            90% {
+                bottom: 90vh;
+                left: 80vw;
+                transform: rotate(5deg) scale(1.3);
+            }
+            100% {
+                bottom: 120vh;
+                left: 110vw;
+                transform: rotate(15deg) scale(1.4);
+                opacity: 0.3;
+            }
+        }
+
         /* Perfect Navigation Alignment */
         nav {
             position: fixed;
@@ -169,19 +231,27 @@
             max-width: 800px;
             padding: 2rem;
             opacity: 0;
-            transform: translateY(50px);
-            animation: heroContentFadeIn 2s ease-out forwards;
-            animation-delay: 0.5s;
+            transform: translate(-400px, 300px) scale(0.5);
+            animation: heroContentFromBottomLeft 3s ease-out forwards;
+            animation-delay: 3s;
         }
 
-        @keyframes heroContentFadeIn {
+        @keyframes heroContentFromBottomLeft {
             0% {
                 opacity: 0;
-                transform: translateY(50px);
+                transform: translate(-400px, 300px) scale(0.5) rotate(-15deg);
+            }
+            30% {
+                opacity: 0.5;
+                transform: translate(-200px, 150px) scale(0.7) rotate(-8deg);
+            }
+            60% {
+                opacity: 0.8;
+                transform: translate(-50px, 50px) scale(0.9) rotate(-3deg);
             }
             100% {
                 opacity: 1;
-                transform: translateY(0);
+                transform: translate(0, 0) scale(1) rotate(0deg);
             }
         }
 
@@ -675,6 +745,13 @@
             animation: float 4s ease-in-out infinite;
         }
 
+        .mentor-card .mentor-photo img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 50%;
+        }
+
         @keyframes float {
             0%, 100% { transform: translateY(0px); }
             50% { transform: translateY(-10px); }
@@ -838,9 +915,30 @@
                 flex-direction: column;
             }
 
+            .shuttle-container {
+                width: 250px;
+                height: 250px;
+            }
+
             .circular-preview {
                 width: 60px;
                 height: 60px;
+            }
+
+            .hero-content {
+                animation: heroContentFromBottomLeftMobile 3s ease-out forwards;
+                animation-delay: 3s;
+            }
+
+            @keyframes heroContentFromBottomLeftMobile {
+                0% {
+                    opacity: 0;
+                    transform: translate(-200px, 200px) scale(0.5) rotate(-15deg);
+                }
+                100% {
+                    opacity: 1;
+                    transform: translate(0, 0) scale(1) rotate(0deg);
+                }
             }
         }
 
@@ -872,6 +970,11 @@
     </style>
 </head>
 <body>
+    <!-- Original Shuttle Container -->
+    <div class="shuttle-container">
+        <img src="shuttle-removebg-preview.png" alt="Space Shuttle" class="shuttle-image">
+    </div>
+
     <!-- Perfectly Aligned Navigation -->
     <nav id="navbar">
         <div class="nav-container">
@@ -1079,7 +1182,9 @@
             <div class="mentors-grid">
                 <div class="mentor-card fade-in perspective-card">
                     <div class="card-inner">
-                        <div class="mentor-photo">DR. AS</div>
+                        <div class="mentor-photo">
+                            <img src="mentor.jpg" alt="Dr. Amelia Singh" />
+                        </div>
                         <h3>Dr. Amelia Singh</h3>
                         <div class="mentor-role">Faculty Advisor | Stellar Astrophysics</div>
                         <p class="mentor-description">Dr. Singh specializes in stellar evolution and supernova research. She has published over 50 papers in leading astronomy journals and guides students in observational techniques and data analysis.</p>
@@ -1111,12 +1216,6 @@
                 <div class="unique-item fade-in perspective-card">
                     <div class="card-inner">
                         <div class="unique-icon">📡</div>
-                        <h3>Radio Astronomy Lab</h3>
-                        <p>On-campus radio telescope facility for detecting pulsars and studying cosmic radio emissions</p>
-                    </div>
-                </div>
-                <div class="unique-item fade-in perspective-card">
-                    <div class="card-inner">
                         <div class="unique-icon">🎯</div>
                         <h3>Research Publications</h3>
                         <p>Student research regularly published in peer-reviewed journals with faculty mentorship</p>
@@ -1169,38 +1268,43 @@
     </section>
 
     <script>
-        // Advanced Gallery System with Your Images
+        // Advanced Gallery System with Circular Preview using your images
         class GallerySystem {
             constructor() {
                 this.currentIndex = 0;
                 this.autoPlay = false;
                 this.autoPlayInterval = null;
                 
-                // Updated with your image files
                 this.images = [
                     {
                         src: "Coorg_star_gazing.jpg",
                         title: "Coorg Star Gazing Expedition",
-                        description: "Our club's amazing star gazing trip to Coorg, where we observed celestial wonders under pristine dark skies. Members had the opportunity to use professional telescopes and learn practical astronomy skills.",
+                        description: "Our club's amazing star gazing trip to Coorg, where we observed celestial wonders under pristine dark skies.",
                         stats: {stat1: "25", stat2: "3", label1: "Participants", label2: "Days"}
                     },
                     {
                         src: "HAL_visit.jpg",
-                        title: "HAL Aerospace Visit",
-                        description: "Educational visit to Hindustan Aeronautics Limited (HAL) where members explored aerospace technology and learned about satellite systems and space missions from industry experts.",
-                        stats: {stat1: "30", stat2: "6", label1: "Students", label2: "Hours"}
+                        title: "HAL Aerospace Museum Visit",
+                        description: "Educational trip to HAL Aerospace Museum where members explored the history of aviation and space technology in India.",
+                        stats: {stat1: "30", stat2: "1", label1: "Students", label2: "Day"}
                     },
                     {
                         src: "URSC_ISRO_visit.jpg",
                         title: "URSC ISRO Center Visit",
-                        description: "Exclusive visit to ISRO's U R Rao Satellite Centre (URSC) where students witnessed satellite assembly processes and interacted with space scientists working on India's space missions.",
-                        stats: {stat1: "20", stat2: "8", label1: "Members", label2: "Presentations"}
+                        description: "Exclusive visit to URSC ISRO center where students learned about satellite technology and space missions firsthand.",
+                        stats: {stat1: "20", stat2: "4", label1: "Members", label2: "Hours"}
                     },
                     {
                         src: "Visvesvaraya_visit.jpg",
-                        title: "Visvesvaraya Museum Visit",
-                        description: "Educational trip to the Visvesvaraya Industrial and Technological Museum, exploring interactive science exhibits and planetarium shows that enhanced our understanding of physics concepts.",
-                        stats: {stat1: "35", stat2: "4", label1: "Visitors", label2: "Exhibits"}
+                        title: "Visvesvaraya Science Museum",
+                        description: "Interactive science learning experience at Visvesvaraya Museum with hands-on physics demonstrations and exhibitions.",
+                        stats: {stat1: "35", stat2: "2", label1: "Attendees", label2: "Days"}
+                    },
+                    {
+                        src: "aarohan.jpg",
+                        title: "Aarohan Space Festival",
+                        description: "Annual space festival organized by our club featuring competitions, workshops, and inspiring talks by space scientists.",
+                        stats: {stat1: "150", stat2: "3", label1: "Participants", label2: "Days"}
                     }
                 ];
                 
