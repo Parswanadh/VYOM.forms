@@ -42,68 +42,6 @@
             z-index: -1;
         }
 
-        /* Original Shuttle Container */
-        .shuttle-container {
-            position: fixed;
-            bottom: -300px;
-            left: -300px;
-            width: 400px;
-            height: 400px;
-            z-index: 10;
-            pointer-events: none;
-            animation: shuttleFlight 12s ease-out forwards;
-            animation-delay: 1s;
-            filter: drop-shadow(20px 20px 40px rgba(0, 0, 0, 0.8));
-        }
-
-        .shuttle-image {
-            width: 100%;
-            height: 100%;
-            object-fit: contain;
-            transform: rotate(45deg);
-            transition: all 0.3s ease;
-        }
-
-        /* Enhanced shuttle flight animation */
-        @keyframes shuttleFlight {
-            0% {
-                bottom: -300px;
-                left: -300px;
-                transform: rotate(-45deg) scale(0.5);
-                opacity: 0;
-            }
-            10% {
-                opacity: 1;
-                transform: rotate(-35deg) scale(0.7);
-            }
-            25% {
-                bottom: 10vh;
-                left: 10vw;
-                transform: rotate(-25deg) scale(0.9);
-            }
-            50% {
-                bottom: 40vh;
-                left: 30vw;
-                transform: rotate(-15deg) scale(1.1);
-            }
-            75% {
-                bottom: 70vh;
-                left: 60vw;
-                transform: rotate(-5deg) scale(1.2);
-            }
-            90% {
-                bottom: 90vh;
-                left: 80vw;
-                transform: rotate(5deg) scale(1.3);
-            }
-            100% {
-                bottom: 120vh;
-                left: 110vw;
-                transform: rotate(15deg) scale(1.4);
-                opacity: 0.3;
-            }
-        }
-
         /* Perfect Navigation Alignment */
         nav {
             position: fixed;
@@ -231,27 +169,19 @@
             max-width: 800px;
             padding: 2rem;
             opacity: 0;
-            transform: translate(-400px, 300px) scale(0.5);
-            animation: heroContentFromBottomLeft 3s ease-out forwards;
-            animation-delay: 3s;
+            transform: translateY(50px);
+            animation: heroContentFadeIn 2s ease-out forwards;
+            animation-delay: 0.5s;
         }
 
-        @keyframes heroContentFromBottomLeft {
+        @keyframes heroContentFadeIn {
             0% {
                 opacity: 0;
-                transform: translate(-400px, 300px) scale(0.5) rotate(-15deg);
-            }
-            30% {
-                opacity: 0.5;
-                transform: translate(-200px, 150px) scale(0.7) rotate(-8deg);
-            }
-            60% {
-                opacity: 0.8;
-                transform: translate(-50px, 50px) scale(0.9) rotate(-3deg);
+                transform: translateY(50px);
             }
             100% {
                 opacity: 1;
-                transform: translate(0, 0) scale(1) rotate(0deg);
+                transform: translateY(0);
             }
         }
 
@@ -908,30 +838,9 @@
                 flex-direction: column;
             }
 
-            .shuttle-container {
-                width: 250px;
-                height: 250px;
-            }
-
             .circular-preview {
                 width: 60px;
                 height: 60px;
-            }
-
-            .hero-content {
-                animation: heroContentFromBottomLeftMobile 3s ease-out forwards;
-                animation-delay: 3s;
-            }
-
-            @keyframes heroContentFromBottomLeftMobile {
-                0% {
-                    opacity: 0;
-                    transform: translate(-200px, 200px) scale(0.5) rotate(-15deg);
-                }
-                100% {
-                    opacity: 1;
-                    transform: translate(0, 0) scale(1) rotate(0deg);
-                }
             }
         }
 
@@ -963,12 +872,7 @@
     </style>
 </head>
 <body>
-    <!-- Original Shuttle Container -->
-    <div class="shuttle-container">
-        <img src="shuttle-removebg-preview.png" alt="Space Shuttle" class="shuttle-image">
-    </div>
-
-    <!-- Perfectly Aligned Navigation -->
+    <!-- Navigation -->
     <nav id="navbar">
         <div class="nav-container">
             <div class="logo-section">
@@ -1003,7 +907,7 @@
         </div>
     </section>
 
-    <!-- Advanced Gallery Section -->
+    <!-- Gallery Section -->
     <section class="gallery-section" id="gallery">
         <div class="gallery-container">
             <h2 class="section-title fade-in">Our Cosmic Journey</h2>
@@ -1012,7 +916,7 @@
                     <img id="main-image" src="Coorg_star_gazing.jpg" alt="Coorg Star Gazing" class="gallery-image">
                     <div class="circular-preview-container">
                         <div class="circular-preview" id="next-preview">
-                            <img id="preview-image" src="HAL_visit.jpg" alt="HAL Visit">
+                            <img id="preview-image" src="HAL_visit.png" alt="HAL Visit">
                         </div>
                     </div>
                     <div class="gallery-overlay">
@@ -1265,14 +1169,13 @@
     </section>
 
     <script>
-        // Advanced Gallery System with Your Images (FIXED HAL IMAGE)
+        // Gallery System with Your Images
         class GallerySystem {
             constructor() {
                 this.currentIndex = 0;
                 this.autoPlay = false;
                 this.autoPlayInterval = null;
                 
-                // Updated with your image files - HAL_visit changed from .HEIC to .jpg
                 this.images = [
                     {
                         src: "Coorg_star_gazing.jpg",
@@ -1281,22 +1184,22 @@
                         stats: {stat1: "25", stat2: "3", label1: "Participants", label2: "Days"}
                     },
                     {
-                        src: "HAL_visit.jpg",  // CHANGED FROM .HEIC TO .jpg
+                        src: "HAL_visit.png",
                         title: "HAL Aerospace Visit",
                         description: "Educational visit to Hindustan Aeronautics Limited (HAL) where members explored aerospace technology and learned about satellite systems and space missions from industry experts.",
                         stats: {stat1: "30", stat2: "6", label1: "Students", label2: "Hours"}
                     },
                     {
                         src: "URSC_ISRO_visit.jpg",
-                        title: "URSC ISRO Center Visit",
-                        description: "Exclusive visit to ISRO's U R Rao Satellite Centre (URSC) where students witnessed satellite assembly processes and interacted with space scientists working on India's space missions.",
-                        stats: {stat1: "20", stat2: "8", label1: "Members", label2: "Presentations"}
+                        title: "URSC ISRO Laboratory Tour",
+                        description: "Exclusive behind-the-scenes tour of ISRO's U R Rao Satellite Centre, where members witnessed satellite assembly and testing procedures for India's space missions.",
+                        stats: {stat1: "20", stat2: "4", label1: "Members", label2: "Labs Visited"}
                     },
                     {
                         src: "Visvesvaraya_visit.jpg",
-                        title: "Visvesvaraya Museum Visit",
-                        description: "Educational trip to the Visvesvaraya Industrial and Technological Museum, exploring interactive science exhibits and planetarium shows that enhanced our understanding of physics concepts.",
-                        stats: {stat1: "35", stat2: "4", label1: "Visitors", label2: "Exhibits"}
+                        title: "Visvesvaraya Science Museum",
+                        description: "Interactive educational visit to explore space science exhibits and planetarium shows. Members engaged with hands-on displays about astronomy and space exploration.",
+                        stats: {stat1: "35", stat2: "8", label1: "Participants", label2: "Exhibits"}
                     }
                 ];
                 
@@ -1335,12 +1238,10 @@
                     this.toggleAutoPlay();
                 });
 
-                // Circular preview click
                 document.getElementById('next-preview').addEventListener('click', () => {
                     this.showImage(this.currentIndex + 1);
                 });
                 
-                // Keyboard navigation
                 document.addEventListener('keydown', (e) => {
                     if (e.key === 'ArrowLeft') this.showImage(this.currentIndex - 1);
                     if (e.key === 'ArrowRight') this.showImage(this.currentIndex + 1);
@@ -1360,7 +1261,6 @@
                 const nextIndex = (index + 1) % this.images.length;
                 const nextImage = this.images[nextIndex];
                 
-                // Update main image with fade effect
                 const mainImage = document.getElementById('main-image');
                 mainImage.style.opacity = '0';
                 
@@ -1370,16 +1270,13 @@
                     mainImage.style.opacity = '1';
                 }, 150);
                 
-                // Update circular preview
                 const previewImage = document.getElementById('preview-image');
                 previewImage.src = nextImage.src;
                 previewImage.alt = nextImage.title;
                 
-                // Update overlay content
                 document.getElementById('image-title').textContent = image.title;
                 document.getElementById('image-description').textContent = image.description;
                 
-                // Update info panel
                 document.getElementById('info-title').textContent = image.title;
                 document.getElementById('info-description').textContent = image.description;
                 document.getElementById('stat1').textContent = image.stats.stat1;
@@ -1387,7 +1284,6 @@
                 document.querySelectorAll('.stat-label')[0].textContent = image.stats.label1;
                 document.querySelectorAll('.stat-label')[1].textContent = image.stats.label2;
                 
-                // Update thumbnails
                 document.querySelectorAll('.thumbnail').forEach((thumb, i) => {
                     thumb.classList.toggle('active', i === index);
                 });
@@ -1437,7 +1333,7 @@
         updateCountdown();
         setInterval(updateCountdown, 1000);
         
-        // Smooth scrolling for navigation
+        // Smooth scrolling
         document.querySelectorAll('a[href^="#"]').forEach(anchor => {
             anchor.addEventListener('click', function (e) {
                 e.preventDefault();
@@ -1461,7 +1357,7 @@
             }
         });
         
-        // Enhanced scroll animations
+        // Scroll animations
         const observerOptions = {
             threshold: 0.1,
             rootMargin: '0px 0px -50px 0px'
@@ -1472,7 +1368,6 @@
                 if (entry.isIntersecting) {
                     entry.target.classList.add('visible');
                     
-                    // Add stagger effect for grids
                     if (entry.target.classList.contains('projects-grid') || 
                         entry.target.classList.contains('mentors-grid') || 
                         entry.target.classList.contains('uniqueness-grid')) {
