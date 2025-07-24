@@ -617,6 +617,12 @@
             overflow: hidden;
         }
 
+        .project-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
         .project-image::before {
             content: '';
             position: absolute;
@@ -970,9 +976,6 @@
     </style>
 </head>
 <body>
-    <!-- Original Shuttle Container -->
-    
-
     <!-- Perfectly Aligned Navigation -->
     <nav id="navbar">
         <div class="nav-container">
@@ -1017,7 +1020,7 @@
                     <img id="main-image" src="Coorg_star_gazing.jpg" alt="Coorg Star Gazing" class="gallery-image">
                     <div class="circular-preview-container">
                         <div class="circular-preview" id="next-preview">
-                            <img id="preview-image" src="HAL_visit.jpg" alt="HAL Visit">
+                            <img id="preview-image" src="Cosmic_conundrum.jpg" alt="Cosmic Conundrum">
                         </div>
                     </div>
                     <div class="gallery-overlay">
@@ -1030,7 +1033,16 @@
                     <p class="gallery-description" id="info-description">
                         Our club's amazing star gazing trip to Coorg, where we observed celestial wonders under pristine dark skies. Members had the opportunity to use professional telescopes and learn practical astronomy skills.
                     </p>
-                   
+                    <div class="gallery-stats">
+                        <div class="stat-item">
+                            <div class="stat-number" id="stat1">25</div>
+                            <div class="stat-label">Participants</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-number" id="stat2">3</div>
+                            <div class="stat-label">Days</div>
+                        </div>
+                    </div>
                 </div>
             </div>
             
@@ -1065,61 +1077,74 @@
             <div class="projects-grid">
                 <div class="project-card fade-in perspective-card">
                     <div class="card-inner">
+                        <div class="project-image">
+                            <img src="Cosmic_conundrum.jpg" alt="Cosmic Conundrum">
+                        </div>
+                        <div class="project-content">
+                            <h3>Cosmic Conundrum</h3>
+                            <p>An exciting 3-stage competitive event featuring space quizzes and buzzer rounds that challenged participants' knowledge of astronomy and astrophysics. Teams battled through multiple rounds of cosmic questions, from basic stellar facts to advanced theoretical concepts, creating an electrifying atmosphere of scientific competition.</p>
+                            <div class="project-date">Multi-stage Quiz Competition</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="project-card fade-in perspective-card">
+                    <div class="card-inner">
+                        <div class="project-image">
+                            <img src="IISC_Bangalore_visit.jpg" alt="IISC Bangalore Visit">
+                        </div>
+                        <div class="project-content">
+                            <h3>IISc Bangalore Open Day Visit</h3>
+                            <p>Club executives embarked on an enlightening journey to IISc Bangalore during their open day. We explored cutting-edge research facilities, interacted with leading scientists, and gained invaluable insights into advanced physics research methodologies and ongoing space science projects at one of India's premier institutes.</p>
+                            <div class="project-date">Educational Research Visit</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="project-card fade-in perspective-card">
+                    <div class="card-inner">
+                        <div class="project-image">
+                            <img src="aarohan.jpg" alt="Aarohan Communications Workshop">
+                        </div>
+                        <div class="project-content">
+                            <h3>Aarohan - Communications Workshop</h3>
+                            <p>We conducted an innovative outreach program for intermediate and high school students, demonstrating how modern communications work using our custom-built NRF modules. Students got hands-on experience with wireless communication principles, learning about radio waves, signal transmission, and the technology behind satellite communications.</p>
+                            <div class="project-date">STEM Outreach Program</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="project-card fade-in perspective-card">
+                    <div class="card-inner">
+                        <div class="project-image">
+                            <img src="prakalp_spinlaunch.jpg" alt="Prakalp Spin Launch">
+                        </div>
+                        <div class="project-content">
+                            <h3>Prakalp Spin Launch</h3>
+                            <p>Our team developed a groundbreaking prototype demonstrating a conceptual fuel-less satellite launch system. This innovative project explored alternative space launch mechanisms using rotational kinetic energy, showcasing the potential for more sustainable and cost-effective methods of reaching orbit without traditional chemical propulsion.</p>
+                            <div class="project-date">Innovation & Research Project</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="project-card fade-in perspective-card">
+                    <div class="card-inner">
                         <div class="project-image">🔭</div>
                         <div class="project-content">
                             <h3>Deep Sky Observation Night</h3>
                             <p>Join us for monthly stargazing sessions using our advanced telescopes to observe nebulae, galaxies, and star clusters. We'll explore the Orion Nebula, Andromeda Galaxy, and other celestial wonders while learning about their formation and evolution. Perfect for beginners and experienced astronomers alike.</p>
-                            
+                            <div class="project-date">Monthly Events</div>
                         </div>
                     </div>
                 </div>
+                
                 <div class="project-card fade-in perspective-card">
                     <div class="card-inner">
                         <div class="project-image">🌌</div>
                         <div class="project-content">
                             <h3>Exoplanet Detection Workshop</h3>
                             <p>Hands-on workshop where students learn to detect exoplanets using the transit method. We'll analyze real data from the Kepler Space Telescope and learn about the techniques used to discover planets orbiting distant stars. Participants will process light curves and identify potential planetary candidates.</p>
-                            
-                        </div>
-                    </div>
-                </div>
-                <div class="project-card fade-in perspective-card">
-                    <div class="card-inner">
-                        <div class="project-image">🚀</div>
-                        <div class="project-content">
-                            <h3>Astrophotography Competition</h3>
-                            <p>Annual competition showcasing the best astronomical photographs taken by club members. Categories include deep-sky objects, planetary imaging, and wide-field star trails. Winners receive recognition and prizes, with their work displayed in the physics department. Technical workshops on imaging techniques are provided.</p>
-                      
-                        </div>
-                    </div>
-                </div>
-                <div class="project-card fade-in perspective-card">
-                    <div class="card-inner">
-                        <div class="project-image">⚫</div>
-                        <div class="project-content">
-                            <h3>Black Hole Simulation Project</h3>
-                            <p>Collaborative research project using Python and specialized software to simulate black hole behavior and gravitational lensing effects. Students work in teams to model accretion disks, Hawking radiation, and spacetime curvature. Results are presented at the annual undergraduate research symposium.</p>
-                            
-                        </div>
-                    </div>
-                </div>
-                <div class="project-card fade-in perspective-card">
-                    <div class="card-inner">
-                        <div class="project-image">🌟</div>
-                        <div class="project-content">
-                            <h3>Stellar Evolution Study Group</h3>
-                            <p>Weekly study sessions focusing on stellar lifecycle, from stellar nurseries to supernovae and neutron stars. We analyze HR diagrams, study stellar spectra, and use computational models to understand how stars evolve. Guest lectures from astronomy professors and graduate students enhance the learning experience.</p>
-                           
-                        </div>
-                    </div>
-                </div>
-                <div class="project-card fade-in perspective-card">
-                    <div class="card-inner">
-                        <div class="project-image">🛰️</div>
-                        <div class="project-content">
-                            <h3>Space Mission Analysis</h3>
-                            <p>In-depth analysis of current and upcoming space missions including James Webb Space Telescope, Artemis program, and Mars rovers. Students research mission objectives, technical specifications, and scientific discoveries. Regular presentations keep members updated on the latest space exploration developments.</p>
-                            <div class="project-date">Monthly mission briefings</div>
+                            <div class="project-date">Research Workshop Series</div>
                         </div>
                     </div>
                 </div>
@@ -1204,7 +1229,6 @@
                 </div>
                 <div class="unique-item fade-in perspective-card">
                     <div class="card-inner">
-                        <div class="unique-icon">📡</div>
                         <div class="unique-icon">🎯</div>
                         <h3>Research Publications</h3>
                         <p>Student research regularly published in peer-reviewed journals with faculty mentorship</p>
@@ -1269,27 +1293,50 @@
                         src: "Coorg_star_gazing.jpg",
                         title: "Coorg Star Gazing Expedition",
                         description: "Our club's amazing star gazing trip to Coorg, where we observed celestial wonders under pristine dark skies.",
-                        
+                        stats: {stat1: "25", stat2: "3", label1: "Participants", label2: "Days"}
+                    },
+                    {
+                        src: "Cosmic_conundrum.jpg",
+                        title: "Cosmic Conundrum",
+                        description: "An exciting 3-stage competitive event featuring space quizzes and buzzer rounds that challenged participants' knowledge of astronomy.",
+                        stats: {stat1: "50", stat2: "3", label1: "Participants", label2: "Stages"}
+                    },
+                    {
+                        src: "IISC_Bangalore_visit.jpg",
+                        title: "IISc Bangalore Open Day Visit",
+                        description: "Club executives visited IISc Bangalore during their open day, exploring cutting-edge research facilities and interacting with leading scientists.",
+                        stats: {stat1: "15", stat2: "8", label1: "Executives", label2: "Hours"}
+                    },
+                    {
+                        src: "aarohan.jpg",
+                        title: "Aarohan - Communications Workshop",
+                        description: "Innovative outreach program for high school students demonstrating communications technology using our custom-built NRF modules.",
+                        stats: {stat1: "40", stat2: "1", label1: "Students", label2: "Day"}
+                    },
+                    {
+                        src: "prakalp_spinlaunch.jpg",
+                        title: "Prakalp Spin Launch",
+                        description: "Groundbreaking prototype of a conceptual fuel-less satellite launch system using rotational kinetic energy for sustainable space access.",
+                        stats: {stat1: "6", stat2: "4", label1: "Team Members", label2: "Months"}
                     },
                     {
                         src: "HAL_visit.jpg",
                         title: "HAL Aerospace Museum Visit",
                         description: "Educational trip to HAL Aerospace Museum where members explored the history of aviation and space technology in India.",
-                     
+                        stats: {stat1: "30", stat2: "1", label1: "Students", label2: "Day"}
                     },
                     {
                         src: "URSC_ISRO_visit.jpg",
                         title: "URSC ISRO Center Visit",
                         description: "Exclusive visit to URSC ISRO center where students learned about satellite technology and space missions firsthand.",
-                        
+                        stats: {stat1: "20", stat2: "4", label1: "Members", label2: "Hours"}
                     },
                     {
                         src: "Visvesvaraya_visit.jpg",
                         title: "Visvesvaraya Science Museum",
                         description: "Interactive science learning experience at Visvesvaraya Museum with hands-on physics demonstrations and exhibitions.",
-                        
+                        stats: {stat1: "35", stat2: "2", label1: "Attendees", label2: "Days"}
                     }
-                
                 ];
                 
                 this.init();
