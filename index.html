@@ -26,8 +26,7 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background: url('background.jpg');
-/*             background-color: rgba(0, 0, 0, 0.5); /* black with 50% opacity */ */
+            background: url('background.jpg') center/cover no-repeat fixed;
             z-index: -2;
         }
 
@@ -257,17 +256,13 @@
         }
 
         .hero h1 {
-            font-size: 5rem;
+            font-size: 3.5rem;
             margin-bottom: 1rem;
             background: linear-gradient(45deg, #ffd700, #ff6b35);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
             animation: titleGlow 2s ease-in-out infinite alternate;
-        }
-        .hero h2{
-            font-size:2rem;
-            
         }
 
         @keyframes titleGlow {
@@ -620,12 +615,6 @@
             color: #ffd700;
             position: relative;
             overflow: hidden;
-        }
-
-        .project-image img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
         }
 
         .project-image::before {
@@ -981,6 +970,11 @@
     </style>
 </head>
 <body>
+    <!-- Original Shuttle Container -->
+    <div class="shuttle-container">
+        <img src="shuttle-removebg-preview.png" alt="Space Shuttle" class="shuttle-image">
+    </div>
+
     <!-- Perfectly Aligned Navigation -->
     <nav id="navbar">
         <div class="nav-container">
@@ -1006,14 +1000,12 @@
     <!-- Hero Section -->
     <section class="hero" id="hero">
         <div class="hero-content">
-            <h1>V Y O M</h1>
-            <h2 >Astrophysics Club</h2>
+            <h1>Welcome to University Astrophysics Club</h1>
             <p>Exploring the universe, one particle at a time.</p>
             <div class="countdown">
-                <div>Registration starts soon....</div>
+                <div>Registration closes in</div>
                 <div class="countdown-timer" id="countdown">00d 00h 00m 00s</div>
             </div>
-           
             <a href="#register" class="cta-button">Join the Journey</a>
         </div>
     </section>
@@ -1027,7 +1019,7 @@
                     <img id="main-image" src="Coorg_star_gazing.jpg" alt="Coorg Star Gazing" class="gallery-image">
                     <div class="circular-preview-container">
                         <div class="circular-preview" id="next-preview">
-                            <img id="preview-image" src="Cosmic_conundrum.jpg" >
+                            <img id="preview-image" src="HAL_visit.jpg" alt="HAL Visit">
                         </div>
                     </div>
                     <div class="gallery-overlay">
@@ -1040,7 +1032,16 @@
                     <p class="gallery-description" id="info-description">
                         Our club's amazing star gazing trip to Coorg, where we observed celestial wonders under pristine dark skies. Members had the opportunity to use professional telescopes and learn practical astronomy skills.
                     </p>
-                    
+                    <div class="gallery-stats">
+                        <div class="stat-item">
+                            <div class="stat-number" id="stat1">25</div>
+                            <div class="stat-label">Participants</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-number" id="stat2">3</div>
+                            <div class="stat-label">Days</div>
+                        </div>
+                    </div>
                 </div>
             </div>
             
@@ -1061,9 +1062,9 @@
         <div class="container">
             <h2 class="section-title fade-in">About Us</h2>
             <div class="about-content fade-in">
-                <p>We’re a crew of space lovers and engineers exploring the universe through every lens—electronics, coding, mechanics, and more. From black holes to satellite tech, we dive into hands-on projects that blend cosmic curiosity with real-world innovation..</p>
+                <p>We are a passionate community of astrophysics enthusiasts dedicated to exploring the cosmic mysteries that lie beyond our planet. From stellar evolution to black holes, from exoplanets to cosmology, we dive deep into the wonders of the universe through observations, research, and innovative projects.</p>
                 <br>
-                <p>Our club is where science meets engineering to unlock the future of space exploration.</p>
+                <p>Our club serves as a gateway to the cosmos, fostering an environment where curiosity about the universe meets cutting-edge astronomical research and discovery.</p>
             </div>
         </div>
     </section>
@@ -1075,59 +1076,64 @@
             <div class="projects-grid">
                 <div class="project-card fade-in perspective-card">
                     <div class="card-inner">
-                        <div class="project-image">
-                            <img src="Cosmic_conundrum.jpg" alt="Cosmic Conundrum">
-                        </div>
+                        <div class="project-image">🔭</div>
                         <div class="project-content">
-                            <h3>Cosmic Conundrum</h3>
-                            <p>An exciting 3-stage competitive event featuring space quizzes and buzzer rounds that challenged participants' knowledge of astronomy and astrophysics. Teams battled through multiple rounds of cosmic questions, from basic stellar facts to advanced theoretical concepts, creating an electrifying atmosphere of scientific competition.</p>
-                            <div class="project-date">Multi-stage Quiz Competition</div>
+                            <h3>Deep Sky Observation Night</h3>
+                            <p>Join us for monthly stargazing sessions using our advanced telescopes to observe nebulae, galaxies, and star clusters. We'll explore the Orion Nebula, Andromeda Galaxy, and other celestial wonders while learning about their formation and evolution. Perfect for beginners and experienced astronomers alike.</p>
+                            <div class="project-date">Every 2nd Friday of the month</div>
                         </div>
                     </div>
                 </div>
-                
                 <div class="project-card fade-in perspective-card">
                     <div class="card-inner">
-                        <div class="project-image">
-                            <img src="IISC_Bangalore_visit.jpg" alt="IISC Bangalore Visit">
-                        </div>
+                        <div class="project-image">🌌</div>
                         <div class="project-content">
-                            <h3>IISc Bangalore Open Day Visit</h3>
-                            <p>Club executives embarked on an enlightening journey to IISc Bangalore during their open day. We explored cutting-edge research facilities, interacted with leading scientists, and gained invaluable insights into advanced physics research methodologies and ongoing space science projects at one of India's premier institutes.</p>
-                            <div class="project-date">Educational Research Visit</div>
+                            <h3>Exoplanet Detection Workshop</h3>
+                            <p>Hands-on workshop where students learn to detect exoplanets using the transit method. We'll analyze real data from the Kepler Space Telescope and learn about the techniques used to discover planets orbiting distant stars. Participants will process light curves and identify potential planetary candidates.</p>
+                            <div class="project-date">Quarterly workshop series</div>
                         </div>
                     </div>
                 </div>
-                
                 <div class="project-card fade-in perspective-card">
                     <div class="card-inner">
-                        <div class="project-image">
-                            <img src="aarohan.jpg" alt="Aarohan Communications Workshop">
-                        </div>
+                        <div class="project-image">🚀</div>
                         <div class="project-content">
-                            <h3>Aarohan - Communications Workshop</h3>
-                            <p>We conducted an innovative outreach program for intermediate and high school students, demonstrating how modern communications work using our custom-built NRF modules. Students got hands-on experience with wireless communication principles, learning about radio waves, signal transmission, and the technology behind satellite communications.</p>
-                            <div class="project-date">STEM Outreach Program</div>
+                            <h3>Astrophotography Competition</h3>
+                            <p>Annual competition showcasing the best astronomical photographs taken by club members. Categories include deep-sky objects, planetary imaging, and wide-field star trails. Winners receive recognition and prizes, with their work displayed in the physics department. Technical workshops on imaging techniques are provided.</p>
+                            <div class="project-date">Annual event - Spring semester</div>
                         </div>
                     </div>
                 </div>
-                
                 <div class="project-card fade-in perspective-card">
                     <div class="card-inner">
-                        <div class="project-image">
-                            <img src="prakalp_spinlaunch.jpg" alt="Prakalp Spin Launch">
-                        </div>
+                        <div class="project-image">⚫</div>
                         <div class="project-content">
-                            <h3>Prakalp Spin Launch</h3>
-                            <p>Our team developed a groundbreaking prototype demonstrating a conceptual fuel-less satellite launch system. This innovative project explored alternative space launch mechanisms using rotational kinetic energy, showcasing the potential for more sustainable and cost-effective methods of reaching orbit without traditional chemical propulsion.</p>
-                            <div class="project-date">Innovation & Research Project</div>
+                            <h3>Black Hole Simulation Project</h3>
+                            <p>Collaborative research project using Python and specialized software to simulate black hole behavior and gravitational lensing effects. Students work in teams to model accretion disks, Hawking radiation, and spacetime curvature. Results are presented at the annual undergraduate research symposium.</p>
+                            <div class="project-date">Semester-long project</div>
                         </div>
                     </div>
                 </div>
-                
-               
-                
-               
+                <div class="project-card fade-in perspective-card">
+                    <div class="card-inner">
+                        <div class="project-image">🌟</div>
+                        <div class="project-content">
+                            <h3>Stellar Evolution Study Group</h3>
+                            <p>Weekly study sessions focusing on stellar lifecycle, from stellar nurseries to supernovae and neutron stars. We analyze HR diagrams, study stellar spectra, and use computational models to understand how stars evolve. Guest lectures from astronomy professors and graduate students enhance the learning experience.</p>
+                            <div class="project-date">Weekly meetings - Wednesdays 7PM</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="project-card fade-in perspective-card">
+                    <div class="card-inner">
+                        <div class="project-image">🛰️</div>
+                        <div class="project-content">
+                            <h3>Space Mission Analysis</h3>
+                            <p>In-depth analysis of current and upcoming space missions including James Webb Space Telescope, Artemis program, and Mars rovers. Students research mission objectives, technical specifications, and scientific discoveries. Regular presentations keep members updated on the latest space exploration developments.</p>
+                            <div class="project-date">Monthly mission briefings</div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </section>
@@ -1140,29 +1146,29 @@
                 <div class="role-item fade-in">
                     <div class="role-icon">🎪</div>
                     <div>
-                        <h3>Science Fest Quizzes</h3>
-                        <p>Hosting exciting quizzes and challenges to spark curiosity</p>
+                        <h3>Science Fest Organizer</h3>
+                        <p>Leading physics demonstrations and interactive exhibits</p>
                     </div>
                 </div>
                 <div class="role-item fade-in">
                     <div class="role-icon">🔬</div>
                     <div>
-                        <h3>Prototype Building</h3>
-                        <p>Creating innovative models and space-inspired tech projects</p>
+                        <h3>Research Symposium</h3>
+                        <p>Presenting cutting-edge research projects and findings</p>
                     </div>
                 </div>
                 <div class="role-item fade-in">
                     <div class="role-icon">🌟</div>
                     <div>
-                        <h3>Space Awareness </h3>
-                        <p>Bringing cosmic knowledge to everyone through sessions and exhibitions</p>
+                        <h3>Outreach Programs</h3>
+                        <p>Inspiring local schools through physics demos and workshops</p>
                     </div>
                 </div>
                 <div class="role-item fade-in">
                     <div class="role-icon">🏆</div>
                     <div>
-                        <h3>Astro Enthusiasts Hub</h3>
-                        <p>Uniting students who share a passion for astrophysics and the universe</p>
+                        <h3>Competition Team</h3>
+                        <p>Representing the college in national physics competitions</p>
                     </div>
                 </div>
             </div>
@@ -1179,9 +1185,9 @@
                         <div class="mentor-photo">
                             <img src="mentor.jpg" alt="Dr. Amelia Singh" />
                         </div>
-                        <h3>H.Manjunath</h3>
-                        <div class="mentor-role">Mentor|Department of physics</div>
-                        <p class="mentor-description"> Manjunath sir has been the guiding star of VYOM — sharing deep scientific wisdom while inspiring us to push beyond our limits. With his support, we’re not just learning; we’re evolving, breaking shells, and rising like stars. .</p>
+                        <h3>Dr. Amelia Singh</h3>
+                        <div class="mentor-role">Faculty Advisor | Stellar Astrophysics</div>
+                        <p class="mentor-description">Dr. Singh specializes in stellar evolution and supernova research. She has published over 50 papers in leading astronomy journals and guides students in observational techniques and data analysis.</p>
                     </div>
                 </div>
             </div>
@@ -1195,23 +1201,24 @@
             <div class="uniqueness-grid">
                 <div class="unique-item fade-in perspective-card">
                     <div class="card-inner">
-                        <div class="unique-icon">🧑‍🚀</div>
-                        <h3>Supportive & Curious Community</h3>
-                        <p>Our OBs and Executives aren’t just admins—they're approachable, fun, and always ready to help. We believe in creating a warm, welcoming space for every member.</p>
+                        <div class="unique-icon">🔭</div>
+                        <h3>Private Observatory Access</h3>
+                        <p>Exclusive 24/7 access to our state-of-the-art observatory with computerized telescopes and CCD cameras</p>
                     </div>
                 </div>
                 <div class="unique-item fade-in perspective-card">
                     <div class="card-inner">
-                        <div class="unique-icon">🚀</div>
-                        <h3>Visits to Real-World Space Hubs</h3>
-                        <p>We don’t just talk science—we go where it happens. Club trips to places like ISRO, HAL, and observatories give hands-on exposure to the world of aerospace.</p>
+                        <div class="unique-icon">🌌</div>
+                        <h3>NASA Collaboration</h3>
+                        <p>Direct partnership with NASA for student internships and access to real space mission data</p>
                     </div>
                 </div>
                 <div class="unique-item fade-in perspective-card">
                     <div class="card-inner">
-                        <div class="unique-icon">💡</div>
-                        <h3>Support for Ideas & Innovation</h3>
-                        <p>Got an idea? We'll help you build it. From brainstorming to working prototypes, our club backs innovation with mentorship, tools, and a cheering squad.</p>
+                        <div class="unique-icon">📡</div>
+                        <div class="unique-icon">🎯</div>
+                        <h3>Research Publications</h3>
+                        <p>Student research regularly published in peer-reviewed journals with faculty mentorship</p>
                     </div>
                 </div>
             </div>
@@ -1223,14 +1230,9 @@
         <div class="container">
             <h2 class="section-title fade-in">Join Our Community</h2>
             <div class="register-form fade-in">
-                <p style="text-align: center; margin-bottom: 2rem;">Ready to embark on your physics journey? join our whatsapp community today for exciting news and openings </p>
-                <div style="text-align: center; margin-top: 40px;">
-                  <img src="QR-code.jpg" alt="Scan to Join" style="width: 300px; max-width: 90%; height: auto;" />
-                  <p style="font-size: 1.2rem; margin-top: 10px; color: white;"></p>
-                </div>
-
-
-                <a href="https://chat.whatsapp.com/DbbUYf4nD0a99AbibQH18V" target="_blank" class="cta-button" style="display:block; width:max-content; margin:2rem auto 0 auto; text-align:center;">Take me there</a>
+                <p style="text-align: center; margin-bottom: 2rem;">Ready to embark on your physics journey? Fill out the form below to become a member!</p>
+                <iframe class="form-iframe" src="https://docs.google.com/forms/d/e/1FAIpQLSehCdlJ0boiKdZwpjUMc1ax4pltFXfkVS6xSIUaJ8Q0VUoAVQ/viewform?usp=sharing&ouid=115913809779884317631" frameborder="0" marginheight="0" marginwidth="0">Loading...</iframe>
+                <a href="https://docs.google.com/forms/d/e/1FAIpQLSehCdlJ0boiKdZwpjUMc1ax4pltFXfkVS6xSIUaJ8Q0VUoAVQ/viewform?usp=sharing&ouid=115913809779884317631" target="_blank" class="cta-button" style="display:block; width:max-content; margin:2rem auto 0 auto; text-align:center;">Take me there</a>
             </div>
         </div>
     </section>
@@ -1242,25 +1244,25 @@
             <div class="contact-info">
                 <div class="contact-item">
                     <span>📧</span>
-                    <span>vyom.amrita@gmail.com</span>
+                    <span>astrophysics.club@university.edu</span>
                 </div>
                 <div class="contact-item">
                     <span>📱</span>
-                    <span>+91 8341717162</span>
+                    <span>+1 (555) 123-4567</span>
                 </div>
                 <div class="contact-item">
                     <span>📍</span>
-                    <span>Physics Department , B-Block</span>
+                    <span>Physics Building, Room 301</span>
                 </div>
             </div>
             <div class="social-links">
                 <a href="#" title="Twitter">🐦</a>
-                <a href="https://www.instagram.com/vyom.amrita?igsh=MXJ0bjRoMDR2dzQwZg==" title="Instagram">📷</a>
+                <a href="#" title="Instagram">📷</a>
                 <a href="#" title="LinkedIn">💼</a>
                 <a href="#" title="GitHub">🐙</a>
             </div>
             <p style="margin-top: 2rem; color: #666;">
-                -By Parswanadh
+                Hosted on GitHub Pages | © 2025 University Astrophysics Club
             </p>
         </div>
     </section>
@@ -1278,29 +1280,31 @@
                         src: "Coorg_star_gazing.jpg",
                         title: "Coorg Star Gazing Expedition",
                         description: "Our club's amazing star gazing trip to Coorg, where we observed celestial wonders under pristine dark skies.",
-                        
+                        stats: {stat1: "25", stat2: "3", label1: "Participants", label2: "Days"}
                     },
-                    
-                    
-                    
-                    
                     {
                         src: "HAL_visit.jpg",
                         title: "HAL Aerospace Museum Visit",
                         description: "Educational trip to HAL Aerospace Museum where members explored the history of aviation and space technology in India.",
-                       
+                        stats: {stat1: "30", stat2: "1", label1: "Students", label2: "Day"}
                     },
                     {
                         src: "URSC_ISRO_visit.jpg",
                         title: "URSC ISRO Center Visit",
                         description: "Exclusive visit to URSC ISRO center where students learned about satellite technology and space missions firsthand.",
-                       
+                        stats: {stat1: "20", stat2: "4", label1: "Members", label2: "Hours"}
                     },
                     {
                         src: "Visvesvaraya_visit.jpg",
                         title: "Visvesvaraya Science Museum",
                         description: "Interactive science learning experience at Visvesvaraya Museum with hands-on physics demonstrations and exhibitions.",
-                       
+                        stats: {stat1: "35", stat2: "2", label1: "Attendees", label2: "Days"}
+                    },
+                    {
+                        src: "aarohan.jpg",
+                        title: "Aarohan Space Festival",
+                        description: "Annual space festival organized by our club featuring competitions, workshops, and inspiring talks by space scientists.",
+                        stats: {stat1: "150", stat2: "3", label1: "Participants", label2: "Days"}
                     }
                 ];
                 
@@ -1422,7 +1426,7 @@
         // Countdown Timer
         function updateCountdown() {
             const now = new Date().getTime();
-            const eventDate = new Date('2025-08-20T23:59:59').getTime();
+            const eventDate = new Date('2025-08-15T23:59:59').getTime();
             const distance = eventDate - now;
             
             const days = Math.floor(distance / (1000 * 60 * 60 * 24));
