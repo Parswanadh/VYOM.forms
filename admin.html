@@ -1,0 +1,448 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>VYOM — Admin Panel</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg-primary: #08080f;
+  --bg-secondary: #0f0f1a;
+  --bg-card: rgba(26, 26, 46, 0.85);
+  --bg-card-hover: rgba(34, 34, 58, 0.95);
+  --bg-elevated: rgba(30, 30, 50, 0.9);
+  --border: rgba(255, 215, 0, 0.08);
+  --border-hover: rgba(255, 215, 0, 0.25);
+  --gold: #ffd700;
+  --orange: #ff6b35;
+  --purple: #a78bfa;
+  --text-primary: #f0f0f0;
+  --text-secondary: #94a3b8;
+  --text-muted: #7878a0;
+  --shadow: 0 8px 40px rgba(0, 0, 0, 0.5);
+  --shadow-lg: 0 20px 60px rgba(0, 0, 0, 0.6);
+  --radius: 16px;
+  --radius-sm: 10px;
+  --radius-xs: 6px;
+  --transition: 0.3s cubic-bezier(0.22, 1, 0.36, 1);
+  --font: 'Inter', system-ui, -apple-system, sans-serif;
+}
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body {
+  font-family: var(--font);
+  background: var(--bg-primary);
+  color: var(--text-primary);
+  min-height: 100vh;
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+  scrollbar-width: thin;
+  scrollbar-color: rgba(255, 215, 0, 0.15) transparent;
+}
+
+/* === Scrollbar === */
+::-webkit-scrollbar { width: 6px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: rgba(255,215,0,0.15); border-radius: 3px; }
+::-webkit-scrollbar-thumb:hover { background: rgba(255,215,0,0.3); }
+
+/* === Login === */
+#login-overlay {
+  position: fixed; inset: 0;
+  background:
+    radial-gradient(ellipse 80% 60% at 50% 40%, rgba(167, 139, 250, 0.06) 0%, transparent 70%),
+    radial-gradient(ellipse 60% 50% at 70% 60%, rgba(255, 107, 53, 0.04) 0%, transparent 60%),
+    radial-gradient(ellipse 50% 40% at 30% 50%, rgba(255, 215, 0, 0.03) 0%, transparent 60%),
+    var(--bg-primary);
+  z-index: 9999;
+  display: flex; align-items: center; justify-content: center;
+}
+.login-box {
+  background: var(--bg-card);
+  padding: 2.5rem;
+  border-radius: var(--radius);
+  border: 1px solid var(--border);
+  width: 380px; max-width: 90vw;
+  box-shadow: var(--shadow-lg);
+  position: relative;
+  overflow: hidden;
+  backdrop-filter: blur(20px);
+}
+.login-box::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 2px;
+  background: linear-gradient(90deg, var(--gold), var(--orange), var(--purple), var(--gold));
+  background-size: 300% 100%;
+  animation: shimmer 4s ease-in-out infinite;
+}
+@keyframes shimmer {
+  0%, 100% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+}
+.login-icon {
+  width: 52px; height: 52px;
+  border-radius: 14px;
+  background: linear-gradient(135deg, var(--gold), var(--orange));
+  display: flex; align-items: center; justify-content: center;
+  font-size: 1.4rem; margin: 0 auto 1.25rem;
+  box-shadow: 0 4px 16px rgba(255, 215, 0, 0.2);
+}
+.login-box h1 {
+  text-align: center;
+  font-size: 1.4rem;
+  font-weight: 700;
+  margin-bottom: 0.35rem;
+  letter-spacing: -0.01em;
+  background: linear-gradient(135deg, #fff 0%, var(--text-secondary) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+.login-box p {
+  text-align: center;
+  color: var(--text-muted);
+  font-size: 0.85rem;
+  margin-bottom: 1.75rem;
+}
+.login-box input {
+  width: 100%;
+  padding: 12px 14px;
+  border-radius: var(--radius-xs);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  background: rgba(0, 0, 0, 0.3);
+  color: var(--text-primary);
+  font-size: 0.9rem;
+  margin-bottom: 0.75rem;
+  transition: var(--transition);
+  outline: none;
+  font-family: var(--font);
+}
+.login-box input::placeholder { color: var(--text-muted); }
+.login-box input:focus {
+  border-color: var(--gold);
+  box-shadow: 0 0 0 3px rgba(255, 215, 0, 0.25);
+}
+.login-box .error {
+  color: #f87171;
+  font-size: 0.8rem;
+  margin-bottom: 0.75rem;
+  display: none;
+  text-align: center;
+  background: rgba(248, 113, 113, 0.08);
+  padding: 8px 12px;
+  border-radius: var(--radius-xs);
+  border: 1px solid rgba(248, 113, 113, 0.15);
+}
+.login-box button {
+  width: 100%;
+  padding: 12px;
+  border: none;
+  border-radius: var(--radius-xs);
+  background: linear-gradient(135deg, var(--gold), var(--orange));
+  color: #000;
+  font-weight: 600;
+  font-size: 0.9rem;
+  cursor: pointer;
+  transition: var(--transition);
+  font-family: var(--font);
+}
+.login-box button:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 20px rgba(255, 215, 0, 0.25);
+}
+.login-box button:active { transform: translateY(0); }
+/* === Sidebar === */
+.sidebar {
+  position: fixed; top: 0; left: 0; bottom: 0;
+  width: 260px;
+  background: rgba(15, 15, 26, 0.95);
+  border-right: 1px solid var(--border);
+  display: none; flex-direction: column;
+  z-index: 1000;
+  backdrop-filter: blur(20px);
+}
+.sidebar.active { display: flex; }
+.sidebar-brand {
+  display: flex; align-items: center; gap: 12px;
+  padding: 1.25rem 1.5rem;
+  border-bottom: 1px solid var(--border);
+}
+.sidebar-logo {
+  width: 38px; height: 38px;
+  border-radius: 10px;
+  background: linear-gradient(135deg, var(--gold), var(--orange));
+  display: flex; align-items: center; justify-content: center;
+  font-size: 1.1rem;
+  box-shadow: 0 2px 12px rgba(255, 215, 0, 0.15);
+}
+.sidebar-brand span {
+  font-size: 1rem;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  background: linear-gradient(135deg, var(--gold), var(--orange));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+.sidebar-nav { flex: 1; padding: 0.75rem; overflow-y: auto; }
+.nav-item {
+  display: flex; align-items: center; gap: 10px;
+  padding: 10px 14px;
+  border-radius: var(--radius-xs);
+  color: var(--text-secondary);
+  text-decoration: none; cursor: pointer;
+  transition: var(--transition);
+  margin-bottom: 2px;
+  font-size: 0.85rem;
+  font-weight: 500;
+  position: relative;
+}
+.nav-item:hover {
+  background: rgba(255, 255, 255, 0.03);
+  color: var(--text-primary);
+}
+.nav-item.active {
+  background: rgba(255, 215, 0, 0.06);
+  color: var(--gold);
+}
+.nav-item.active::before {
+  content: '';
+  position: absolute;
+  left: -0.75rem; top: 50%;
+  transform: translateY(-50%);
+  width: 3px; height: 20px;
+  background: var(--gold);
+  border-radius: 0 3px 3px 0;
+}
+.nav-icon { font-size: 1rem; opacity: 0.8; }
+.nav-item.active .nav-icon { opacity: 1; }
+.sidebar-footer { padding: 0.75rem; border-top: 1px solid var(--border); }
+.logout-btn {
+  width: 100%; padding: 8px;
+  border: 1px solid rgba(248, 113, 113, 0.15);
+  border-radius: var(--radius-xs);
+  background: transparent;
+  color: #f87171;
+  cursor: pointer;
+  font-size: 0.8rem;
+  font-weight: 500;
+  margin-top: 6px;
+  transition: var(--transition);
+  font-family: var(--font);
+}
+.logout-btn:hover { background: rgba(248, 113, 113, 0.08); }
+
+/* === Main Content === */
+.main-content {
+  display: none;
+  margin-left: 260px;
+  flex: 1;
+  padding: 2rem 2.5rem;
+  max-width: 1200px;
+  width: calc(100% - 260px);
+}
+.main-content.active { display: block; }
+.section-header {
+  display: flex; align-items: center;
+  justify-content: space-between;
+  margin-bottom: 1.5rem;
+  flex-wrap: wrap; gap: 1rem;
+}
+.section-header h1 {
+  font-size: 1.5rem;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+}
+.card {
+  background: var(--bg-card);
+  border-radius: var(--radius);
+  padding: 1.5rem;
+  margin-bottom: 1.25rem;
+  border: 1px solid var(--border);
+  transition: var(--transition);
+  backdrop-filter: blur(10px);
+}
+.card:hover { border-color: var(--border-hover); }
+.card h3 { font-size: 0.95rem; color: var(--gold); margin-bottom: 1rem; font-weight: 600; letter-spacing: 0.01em; }
+
+table { width: 100%; border-collapse: separate; border-spacing: 0; }
+th, td {
+  padding: 10px 14px;
+  text-align: left;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+  font-size: 0.85rem;
+}
+th {
+  color: var(--text-muted);
+  font-weight: 600;
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  padding-top: 0;
+}
+td { color: var(--text-primary); }
+tr:last-child td { border-bottom: none; }
+tr:hover td { background: rgba(255, 255, 255, 0.015); }
+
+.btn {
+  padding: 8px 18px; border: none;
+  border-radius: var(--radius-xs); cursor: pointer;
+  font-size: 0.82rem; font-weight: 600;
+  transition: var(--transition);
+  display: inline-flex; align-items: center; gap: 6px;
+  font-family: var(--font);
+}
+.btn-primary { background: linear-gradient(135deg, var(--gold), var(--orange)); color: #000; }
+.btn-primary:hover { transform: translateY(-1px); box-shadow: 0 4px 16px rgba(255, 215, 0, 0.2); }
+.btn-danger { background: rgba(248, 113, 113, 0.08); color: #f87171; border: 1px solid rgba(248, 113, 113, 0.12); }
+.btn-danger:hover { background: rgba(248, 113, 113, 0.15); }
+.btn-sm { padding: 5px 10px; font-size: 0.78rem; }
+
+.badge { display: inline-block; padding: 3px 8px; border-radius: 20px; background: rgba(255, 215, 0, 0.06); color: var(--gold); font-size: 0.75rem; font-weight: 500; }
+form label { display: block; color: var(--text-secondary); font-size: 0.82rem; margin-bottom: 0.25rem; font-weight: 500; }
+form input, form textarea, form select {
+  width: 100%;
+  padding: 10px 12px;
+  border-radius: var(--radius-xs);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  background: rgba(0, 0, 0, 0.2);
+  color: var(--text-primary);
+  font-size: 0.85rem;
+  margin-bottom: 0.75rem;
+  transition: var(--transition);
+  outline: none;
+  font-family: var(--font);
+}
+form input:focus, form textarea:focus, form select:focus { border-color: var(--gold); box-shadow: 0 0 0 3px rgba(255, 215, 0, 0.2); }
+form textarea { resize: vertical; min-height: 80px; }
+
+.layout-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 0.75rem; }
+.layout-option {
+  padding: 1.25rem 0.75rem;
+  border-radius: var(--radius-sm);
+  border: 2px solid rgba(255, 255, 255, 0.04);
+  cursor: pointer;
+  text-align: center;
+  transition: var(--transition);
+}
+.layout-option:hover { border-color: rgba(255, 255, 255, 0.12); }
+.layout-option.selected { border-color: var(--gold); background: rgba(255, 215, 0, 0.06); }
+.layout-option h4 { font-size: 0.85rem; color: var(--text-primary); margin-top: 0.5rem; font-weight: 500; }
+.theme-preview { width: 100%; height: 50px; border-radius: var(--radius-xs); margin-bottom: 0.5rem; }
+.theme-cosmic { background: linear-gradient(135deg, #0a0a0f, #1a1a2e, rgba(255, 215, 0, 0.15)); }
+.theme-nebula { background: linear-gradient(135deg, #0f0a1a, #2e1a3a, rgba(167, 139, 250, 0.15)); }
+.theme-solar { background: linear-gradient(135deg, #1a0f0a, #3a2e1a, rgba(251, 146, 60, 0.15)); }
+
+.toggle { position: relative; display: inline-block; width: 44px; height: 24px; }
+.toggle input { opacity: 0; width: 0; height: 0; }
+.slider {
+  position: absolute; cursor: pointer;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background: rgba(255, 255, 255, 0.06);
+  transition: var(--transition);
+  border-radius: 24px;
+}
+.slider:before {
+  position: absolute; content: "";
+  height: 18px; width: 18px;
+  left: 3px; bottom: 3px;
+  background: var(--text-muted);
+  transition: var(--transition);
+  border-radius: 50%;
+}
+input:checked + .slider { background: linear-gradient(135deg, var(--gold), var(--orange)); }
+input:checked + .slider:before { transform: translateX(20px); background: #fff; }
+
+.toast {
+  position: fixed; bottom: 24px; right: 24px;
+  padding: 12px 20px;
+  border-radius: var(--radius-xs);
+  font-weight: 600; font-size: 0.85rem;
+  z-index: 99999; display: none;
+  animation: slideUp 0.3s ease;
+}
+.toast.success { background: #22c55e; color: #fff; display: block; box-shadow: 0 4px 16px rgba(34, 197, 94, 0.2); }
+.toast.error { background: #ef4444; color: #fff; display: block; box-shadow: 0 4px 16px rgba(239, 68, 68, 0.2); }
+@keyframes slideUp { from { transform: translateY(16px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
+
+.modal {
+  position: fixed; inset: 0;
+  background: rgba(0, 0, 0, 0.6);
+  z-index: 9998;
+  align-items: center; justify-content: center;
+  padding: 2rem;
+  backdrop-filter: blur(8px);
+}
+.modal-content {
+  background: var(--bg-elevated);
+  border-radius: var(--radius);
+  padding: 1.75rem;
+  max-width: 520px; width: 100%;
+  border: 1px solid var(--border);
+  max-height: 85vh; overflow-y: auto;
+  box-shadow: var(--shadow-lg);
+}
+.modal-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.25rem; }
+.modal-header h2 { font-size: 1.2rem; font-weight: 700; letter-spacing: -0.01em; }
+.modal-close { background: none; border: none; color: var(--text-muted); font-size: 1.2rem; cursor: pointer; padding: 4px 8px; border-radius: 4px; transition: var(--transition); }
+.modal-close:hover { color: var(--text-primary); background: rgba(255, 255, 255, 0.04); }
+
+@media (max-width: 768px) {
+  .sidebar { width: 100%; }
+  .sidebar.active { position: fixed; z-index: 1000; }
+  .main-content { margin-left: 0; width: 100%; padding: 1rem; }
+  .section-header { flex-direction: column; align-items: flex-start; }
+}
+
+</style>
+</head>
+<body>
+
+
+<div id="login-overlay">
+  <div class="login-box">
+    <div class="login-icon">🚀</div>
+    <h1>Welcome Back</h1>
+    <p>Enter password to manage site</p>
+    <div class="error" id="login-error">Incorrect password</div>
+    <input type="password" id="password-input" placeholder="Admin password" onkeydown="if(event.key==='Enter')login()">
+    <button onclick="login()">Sign In</button>
+  </div>
+</div>
+
+
+<aside class="sidebar" id="sidebar">
+  <div class="sidebar-brand">
+    <div class="sidebar-logo">🚀</div>
+    <span>VYOM Admin</span>
+  </div>
+  <nav class="sidebar-nav">
+    <a onclick="switchTab('events')" class="nav-item active" data-tab="events"><span class="nav-icon">📋</span><span>Events</span></a>
+    <a onclick="switchTab('gallery')" class="nav-item" data-tab="gallery"><span class="nav-icon">🖼</span><span>Gallery</span></a>
+    <a onclick="switchTab('mentors')" class="nav-item" data-tab="mentors"><span class="nav-icon">👥</span><span>Mentors</span></a>
+    <a onclick="switchTab('layout')" class="nav-item" data-tab="layout"><span class="nav-icon">🎨</span><span>Layout</span></a>
+  </nav>
+  <div class="sidebar-footer">
+    <a href="/" class="nav-item" target="_blank"><span class="nav-icon">🔗</span><span>View Site</span></a>
+    <button onclick="logout()" class="logout-btn">Logout</button>
+  </div>
+</aside>
+
+<main class="main-content" id="main-content">
+  <div id="tab-events" class="tab-content active"></div>
+  <div id="tab-gallery" class="tab-content"></div>
+  <div id="tab-mentors" class="tab-content"></div>
+  <div id="tab-layout" class="tab-content"></div>
+</main>
+
+<div id="toast" class="toast"></div>
+<div id="modal" class="modal" style="display:none" onclick="if(event.target===this)closeModal()">
+  <div class="modal-content" id="modal-body"></div>
+</div>
+
+<script src="admin.js"></script>
+
+</body>
+</html>

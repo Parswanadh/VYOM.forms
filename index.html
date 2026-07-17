@@ -994,6 +994,7 @@
                 <li><a href="#uniqueness">Uniqueness</a></li>
                 <li><a href="#register">Register</a></li>
                 <li><a href="#contact">Contact</a></li>
+                <li><a href="/admin" style="color:#ff6b35;font-weight:700;">⚙ Admin</a></li>
             </ul>
         </div>
     </nav>
@@ -1035,10 +1036,12 @@
                     </p>
                     <div class="gallery-stats">
                         <div class="stat-item">
-                            
+                            <div class="stat-number" id="stat1">25</div>
+                            <div class="stat-label">Participants</div>
                         </div>
                         <div class="stat-item">
-                            
+                            <div class="stat-number" id="stat2">3</div>
+                            <div class="stat-label">Days</div>
                         </div>
                     </div>
                 </div>
@@ -1394,8 +1397,10 @@
                 // Update info panel
                 document.getElementById('info-title').textContent = image.title;
                 document.getElementById('info-description').textContent = image.description;
-                document.getElementById('stat1').textContent = image.stats.stat1;
-                document.getElementById('stat2').textContent = image.stats.stat2;
+                const s1 = document.getElementById('stat1');
+                const s2 = document.getElementById('stat2');
+                if (s1) s1.textContent = image.stats.stat1;
+                if (s2) s2.textContent = image.stats.stat2;
                 document.querySelectorAll('.stat-label')[0].textContent = image.stats.label1;
                 document.querySelectorAll('.stat-label')[1].textContent = image.stats.label2;
                 
@@ -1430,7 +1435,7 @@
         // Countdown Timer
         function updateCountdown() {
             const now = new Date().getTime();
-            const eventDate = new Date('2025-08-15T23:59:59').getTime();
+            const eventDate = new Date('2026-12-25T23:59:59').getTime();
             const distance = eventDate - now;
             
             const days = Math.floor(distance / (1000 * 60 * 60 * 24));
@@ -1503,6 +1508,41 @@
         document.querySelectorAll('.fade-in').forEach(el => {
             observer.observe(el);
         });
+
+        // Load dynamic data from API
+        (async function loadDynamicData() {
+            try {
+                const r = await fetch('/.netlify/functions/api');
+                if (!r.ok) return;
+                const data = await r.json();
+
+                // Load events from API
+                if (data.events && data.events.length > 0) {
+                    const grid = document.querySelector('.projects-grid');
+                    if (grid) {
+                        grid.innerHTML = data.events.map(e => `
+                            <div class="project-card fade-in perspective-card">
+                                <div class="card-inner">
+                                    <div class="project-image">${e.image ? '<img src="' + e.image + '">' : '🚀'}</div>
+                                    <div class="project-content">
+                                        <h3>${e.title}</h3>
+                                        <p>${e.description}</p>
+                                        <div class="project-date">${e.category || 'Event'}</div>
+                                    </div>
+                                </div>
+                            </div>
+                        `).join('');
+                        // Re-observe new fade-in elements
+                        grid.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+                    }
+                }
+
+                // Load layout settings
+                if (data.layout) {
+                    document.documentElement.style.setProperty('--layout-theme', data.layout.theme || 'cosmic');
+                }
+            } catch(e) { /* use static fallback */ }
+        })();
     </script>
 </body>
 </html>

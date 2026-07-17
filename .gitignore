@@ -1,0 +1,8 @@
+node_modules/
+.playwright-mcp/
+*.py
+gen_*
+fix_*
+write_*
+.DS_Store
+.netlify/
